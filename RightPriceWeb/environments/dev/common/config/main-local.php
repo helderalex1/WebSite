@@ -16,10 +16,9 @@ return [
             // for the mailer to send real emails.
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.mailtrap.io',
-                'username' => '0dd44506526d73',
-                'password' => '145ba7e63653e9',
-                'port' => '2525',
+                'host' => 'mail.marcosferreira.site',
+                'username' => 'rightprice@marcosferreira.site',
+                'password' => 'rightprice9',
                 'encryption' => 'tls',
             ],
         ],
