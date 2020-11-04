@@ -12,9 +12,9 @@ class m130524_162723_categoria extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('post', [
+        $this->createTable('categoria', [
             'id' => $this->primaryKey(),
-            'Nome_Categoria' => $this->string()->notNull(),
+            'nome_Categoria' => $this->string()->notNull(),
         ]);
 
     }
