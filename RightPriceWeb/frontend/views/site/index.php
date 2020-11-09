@@ -9,6 +9,7 @@ $this->title = 'Right Price';
 
 
 ?>
+<div class="row section">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -18,25 +19,20 @@ $this->title = 'Right Price';
 
         <div  class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="img/test.jpg" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block animated fadeInUp slow">
-                    <h5 class="animated fadeInUp slow delay-1s">Espaços Comerciais</h5>
-                    <p class="animated fadeInUp slow delay-2s">"Os nossos escritórios ficaram impecáveis quando terminados"</p>
-                </div>
-
+                <img class="d-block w-100" src="/img/banner1.png" alt="Third slide">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="img/slider2.png" alt="Second slide">
+                <img class="d-block w-100" src="/img/banner2.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block animated fadeInUp slow">
-                    <h5 class="animated fadeInUp slow delay-1s">Sistemas Industriais</h5>
-                    <p class="animated fadeInUp slow delay-2s">"De uma forma simples e eficiente resolvemos grande parte dos problemas relacionados com o ambiente e condições de trabalho"</p>
+                    <h5 class="animated fadeInUp slow delay-1s">Sistema Cloud</h5>
+                    <p class="animated fadeInUp slow delay-2s">Deixe todas as preocupaçoes e atualizações para nós! Com o nosso sistema Cloud pode focar-se inteiramente no seu negócio.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="img/slider1.png" alt="First slide">
+                <img class="d-block w-100" src="/img/banner3.jpg" alt="First slide">
                 <div class="carousel-caption d-none d-md-block  animated fadeInUp slow">
-                    <h5 class="animated fadeInUp slow delay-1s">Climatização</h5>
-                    <p class="animated fadeInUp slow delay-2s">"Notámos uma grande poupança no custo da energia após a instalação dos nossos sistemas."</p>
+                    <h5 class="animated fadeInUp slow delay-1s">Orçamentação</h5>
+                    <p class="animated fadeInUp slow delay-2s">O nosso sistema de orçamentação permite entregar ao seu cliente um orçamento em breves momentos.</p>
                 </div>
             </div>
         </div>
@@ -49,40 +45,93 @@ $this->title = 'Right Price';
             <span class="sr-only">Next</span>
         </a>
     </div>
+</div>
 
-    <div class="body-content">
+<div class="row section">
+    <img class="d-block w-100" src="/img/mission.png" alt="mission">
+</div>
+<div class="row m-5">
+    <h1>A NOSSA EQUIPA</h1>
+</div>
+<div class="row section">
+    <div class="col-lg-4">
+        <img class="rounded-circle mb-4" src="/img/marcos.jpg" alt="Generic placeholder image" width="180" height="180">
+        <h2>Marcos Ferreira</h2>
+        <p>Web Developer</p>
+        <p>"If you think that you have reached perfection know that you still have much to learn"</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+        <img class="rounded-circle mb-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="180" height="180">
+        <h2>Rui Agostinho</h2>
+        <p>Mobile Developer</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+        <img class="rounded-circle mb-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="180" height="180">
+        <h2>Hélder Abrantes</h2>
+        <p>Project Manager</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
+    </div><!-- /.col-lg-4 -->
+</div>
+<div class="row m-5">
+    <h1>OS NOSSOS PARCEIROS</h1>
+</div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+<div class="row section">
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Instalador 1</h2>
+                <p class="card-text">Categoria</p>
             </div>
         </div>
-
     </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Fornecedor 1</h2>
+                <p class="card-text">Categoria</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Instalador 2</h2>
+                <p class="card-text">Categoria</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Instalador 3</h2>
+                <p class="card-text">Categoria</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Fornecedor 2</h2>
+                <p class="card-text">Categoria</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-text">Instalador 4</h2>
+                <p class="card-text">Categoria</p>
+            </div>
+        </div>
+    </div>
+</div>
