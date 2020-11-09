@@ -1,17 +1,53 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
-$this->title = 'My Yii Application';
+$this->title = 'Right Price';
+
+
 ?>
-<div class="site-index">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <div  class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="img/test.jpg" alt="Third slide">
+                <div class="carousel-caption d-none d-md-block animated fadeInUp slow">
+                    <h5 class="animated fadeInUp slow delay-1s">Espaços Comerciais</h5>
+                    <p class="animated fadeInUp slow delay-2s">"Os nossos escritórios ficaram impecáveis quando terminados"</p>
+                </div>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider2.png" alt="Second slide">
+                <div class="carousel-caption d-none d-md-block animated fadeInUp slow">
+                    <h5 class="animated fadeInUp slow delay-1s">Sistemas Industriais</h5>
+                    <p class="animated fadeInUp slow delay-2s">"De uma forma simples e eficiente resolvemos grande parte dos problemas relacionados com o ambiente e condições de trabalho"</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider1.png" alt="First slide">
+                <div class="carousel-caption d-none d-md-block  animated fadeInUp slow">
+                    <h5 class="animated fadeInUp slow delay-1s">Climatização</h5>
+                    <p class="animated fadeInUp slow delay-2s">"Notámos uma grande poupança no custo da energia após a instalação dos nossos sistemas."</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 
     <div class="body-content">
@@ -50,4 +86,3 @@ $this->title = 'My Yii Application';
         </div>
 
     </div>
-</div>
