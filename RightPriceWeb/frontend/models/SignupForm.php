@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use app\models\Categoria;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -13,7 +14,15 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $categoria_id;
 
+
+    public function attributeLabels()
+    {
+        return [
+            'categoria_id' => 'Categoria',
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -54,7 +63,9 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
+        $user->categoria_id = $this->categoria_id;
         return $user->save() && $this->sendEmail($user);
+
 
     }
 

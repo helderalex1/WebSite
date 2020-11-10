@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to signup:</p>
+    <?= var_dump($categoria)  ?>
 
     <div class="row">
         <div class="col-lg-5">
@@ -24,6 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'categoria_id')->listBox($categoria, [
+                    'multiple' => true,
+                    'size' => 7,
+                ]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

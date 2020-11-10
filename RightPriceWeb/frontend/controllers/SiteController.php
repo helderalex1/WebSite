@@ -1,10 +1,12 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Categoria;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -14,6 +16,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+
 
 /**
  * Site controller
@@ -153,6 +156,8 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+        $dataProvider = Categoria::find()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
@@ -160,6 +165,7 @@ class SiteController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'categoria' =>$dataProvider,
         ]);
     }
 
