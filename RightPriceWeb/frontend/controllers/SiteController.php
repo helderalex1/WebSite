@@ -164,8 +164,11 @@ class SiteController extends Controller
 
         }
 
+        $roles[0] = \Yii::$app->authManager->getRole('fornecedor');
+        $roles[1] = \Yii::$app->authManager->getRole('instalador');
         return $this->render('signup', [
             'model' => $model,
+            'roles' => $roles,
         ]);
     }
 

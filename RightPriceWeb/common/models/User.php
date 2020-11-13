@@ -47,6 +47,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+
     /**
      * {@inheritdoc}
      */
@@ -56,6 +57,13 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['categoria_id','integer'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'categoria_id' => 'Categoria',
         ];
     }
 

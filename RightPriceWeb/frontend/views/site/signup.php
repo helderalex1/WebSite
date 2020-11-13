@@ -11,7 +11,9 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'categoria_id')->dropDownList(ArrayHelper::map(Categoria::find()->asArray()->all(), 'id', 'nome_Categoria')) ?>
+                <?= $form->field($model, 'role')->dropDownList(ArrayHelper::map($roles, 'name', 'description')) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
