@@ -1,7 +1,6 @@
 <?php
 namespace frontend\models;
 
-use app\models\Categoria;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -15,14 +14,6 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $categoria_id;
-
-
-    public function attributeLabels()
-    {
-        return [
-            'categoria_id' => 'Categoria',
-        ];
-    }
 
     /**
      * {@inheritdoc}
@@ -43,6 +34,9 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['categoria_id', 'required'],
+
         ];
     }
 
@@ -56,7 +50,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;

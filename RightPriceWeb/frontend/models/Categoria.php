@@ -43,6 +43,10 @@ class Categoria extends \yii\db\ActiveRecord
             'nome_Categoria' => 'Nome Categoria',
         ];
     }
+    public static function getCategorias()
+    {
+        return Categoria::find()->all();
+    }
 
     /**
      * Gets query for [[Users]].

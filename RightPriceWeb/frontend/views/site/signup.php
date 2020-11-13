@@ -4,8 +4,10 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\SignupForm */
 
+use app\models\Categoria;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to signup:</p>
-    <?= var_dump($categoria)  ?>
 
     <div class="row">
         <div class="col-lg-5">
@@ -25,10 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
-                <?= $form->field($model, 'categoria_id')->listBox($categoria, [
-                    'multiple' => true,
-                    'size' => 7,
-                ]) ?>
+
+                <?= $form->field($model, 'categoria_id')->dropDownList(ArrayHelper::map(Categoria::find()->asArray()->all(), 'id', 'nome_Categoria')) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
