@@ -13,7 +13,8 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-
+    public $categoria_id;
+    public $role;
 
     /**
      * {@inheritdoc}
@@ -34,6 +35,21 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['categoria_id', 'trim'],
+            ['categoria_id', 'required'],
+
+            ['role', 'trim'],
+            ['role', 'required'],
+
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'categoria_id' => 'Categoria',
+            'role' => 'Tipo de utilizador',
         ];
     }
 
@@ -44,18 +60,24 @@ class SignupForm extends Model
      */
     public function signup()
     {
-        if (!$this->validate()) {
-            return null;
+        if ($this->validate()) {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+            $user->categoria_id = $this->categoria_id;
+            if(!$user->save()){
+                return null;
+            }
+            $auth = \Yii::$app->authManager;
+            $authorRole = $auth->getRole($this->role);
+            $auth->assign($authorRole, $user->getId());
+            return $this->sendEmail($user);
         }
-        
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
 
+        return null;
     }
 
     /**

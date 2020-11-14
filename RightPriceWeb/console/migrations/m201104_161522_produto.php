@@ -15,6 +15,7 @@ class m201104_161522_produto extends Migration
         $this->createTable('produto', [
             'id' => $this->primaryKey(),
             'fornecedor_id' => $this->integer()->notNull(),
+            'imagem' => $this->binary(),
             'nome' => $this->string()->notNull(),
             'referencia' => $this->string()->notNull(),
             'descricao' => $this->string(),
