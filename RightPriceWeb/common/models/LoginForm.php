@@ -55,6 +55,10 @@ class LoginForm extends Model
      */
     public function login()
     {
+        $role = \Yii::$app->authManager->getRolesByUser($this->getUser()->getId());
+        if(isset($role['admin'])){
+            return Yii::$app->session->setFlash('error', 'There was an error with your login');;
+        }
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }

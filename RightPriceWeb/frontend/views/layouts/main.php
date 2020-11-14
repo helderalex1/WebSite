@@ -34,37 +34,63 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
 
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-expand-md navbar-light bg-light',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
     if (Yii::$app->user->isGuest) {
+        $brand =  [
+            'brandLabel' => Yii::$app->name,
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-expand-md navbar-light bg-light',
+            ],
+        ];
+        $menuItems = [
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Contact', 'url' => ['/site/contact']],
+        ];
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $role = \Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->getId());
+        if(isset($role['fornecedor'])){
+            $brand =  [
+                'brandLabel' => Yii::$app->name,
+                'brandUrl' => '/user',
+                'options' => [
+                    'class' => 'navbar-expand-md navbar-light bg-light',
+                ],
+            ];
+            $menuItems[] = ['label' => 'Produtos', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Instaladores', 'url' => ['/site/login']];
+        }else if(isset($role['instalador'])){
+            $brand =  [
+                'brandLabel' => Yii::$app->name,
+                'brandUrl' => '/user',
+                'options' => [
+                    'class' => 'navbar-expand-md navbar-light bg-light',
+                ],
+            ];
+            $menuItems[] = ['label' => 'Clientes', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Fornecedores', 'url' => ['/site/login']];
+        }
+        $menuItems[] = ['label' => ''. ucfirst(Yii::$app->user->identity->username).'' , 'url' => ['/user/view', 'id' => Yii::$app->user->identity->getId()]];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout ',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
             . '</li>';
     }
+
+
+    NavBar::begin($brand);
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ml-auto'],
         'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
-
     <div class="container mt-5">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

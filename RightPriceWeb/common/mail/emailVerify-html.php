@@ -11,5 +11,5 @@ $verifyLink = Yii::$app->urlManager->createAbsoluteUrl(['site/verify-email', 'to
 
     <p>Thank you for your appliance at our platform.</p>
 
-    <p>We account will validate your signup in the next moments</p>
+    <p>We will validate your account signup in the next moments</p>
 </div>
