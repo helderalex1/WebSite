@@ -20,7 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href="/css/fontawesome/all.css" rel="stylesheet">
 
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
@@ -68,7 +68,7 @@ AppAsset::register($this);
                     'class' => 'navbar-expand-md navbar-light bg-light',
                 ],
             ];
-            $menuItems[] = ['label' => 'Clientes', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Clientes', 'url' => ['/cliente']];
             $menuItems[] = ['label' => 'Fornecedores', 'url' => ['/site/login']];
         }
         $menuItems[] = ['label' => ''. ucfirst(Yii::$app->user->identity->username).'' , 'url' => ['/user/view', 'id' => Yii::$app->user->identity->getId()]];
