@@ -1,6 +1,10 @@
 <?php
 
+use app\models\Obra;
+use yii\bootstrap4\ActiveForm;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -10,9 +14,9 @@ $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$obras = $model->getObras()->asArray()->all();
 ?>
 <div class="cliente-view">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row mb-5">
@@ -32,7 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row justify-content-center">
+
         <div class="col-md-4">
+            <p>Info</p>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
@@ -43,9 +49,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
         </div>
-        <div class="col-md-8">
-
-
+        <div class="col-md-8 ">
+            <p>Obras</p>
+            <table class="table table-striped text-center">
+                <tbody>
+                <?php for( $i= 0 ; $i<$model->getObras()->count(); $i++){?>
+                    <tr>
+                        <td><?=$obras[$i]['id'] ?></td>
+                        <td><?=$obras[$i]['nome'] ?></td>
+                        <td><a href="#" class="btn btn-primary">Visualizar</a></td>
+                    </tr>
+                <?php } ?>
+            </table>
         </div>
     </div>
 </div>
@@ -61,19 +76,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="container-fluid">
-                <form method="POST" action="#">
-                    <input type="hidden" name="cliente_id" value="{{$cliente->id}}">
-                    <div class="form-group mt-2">
-                        <label for="nome">Nome:</label>
-                        <input id="nome" name="nome" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                    </div>
+            <div class="container">
 
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" >Inserir</button>
-                    </div>
-                </form>
+
+                <?php $form = ActiveForm::begin(['action' => ['obra/create'], 'method' => 'post']); ?>
+
+                <?= $form->field($obra, 'cliente_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
+
+                <?= $form->field($obra, 'nome') ?>
+
+                <div class="form-group">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                </div>
+
+                <?php ActiveForm::end(); ?>
             </div>
 
         </div>

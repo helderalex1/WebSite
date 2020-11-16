@@ -2,21 +2,17 @@
 
 namespace frontend\controllers;
 
-use app\models\Obra;
-use app\models\User;
 use Yii;
-use app\models\Cliente;
+use app\models\Obra;
 use yii\data\ActiveDataProvider;
-use yii\data\SqlDataProvider;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ClienteController implements the CRUD actions for Cliente model.
+ * ObraController implements the CRUD actions for Obra model.
  */
-class ClienteController extends Controller
+class ObraController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -34,33 +30,14 @@ class ClienteController extends Controller
     }
 
     /**
-     * Lists all Cliente models.
+     * Lists all Obra models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $user = User::findOne(Yii::$app->user->identity->getId());
-
-        $dataProvider = new SqlDataProvider([
-            'sql' => 'SELECT * FROM cliente WHERE user_id='.Yii::$app->user->identity->getId() ,
-            'params' => [':status' => 1],
-            'totalCount' => $user->getClientes()->count(),
-            'sort' => [
-                'attributes' => [
-                    'age',
-                    'name' => [
-                        'asc' => ['first_name' => SORT_ASC, 'last_name' => SORT_ASC],
-                        'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
-                        'default' => SORT_DESC,
-                        'label' => 'Name',
-                    ],
-                ],
-            ],
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+        $dataProvider = new ActiveDataProvider([
+            'query' => Obra::find(),
         ]);
-
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -68,35 +45,26 @@ class ClienteController extends Controller
     }
 
     /**
-     * Displays a single Cliente model.
+     * Displays a single Obra model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $cliente= $this->findModel($id);
-        $obra = new Obra();
-        if($cliente->user_id == Yii::$app->user->identity->getId())
-        {
-            return $this->render('view', [
-                'model' => $cliente,
-                'obra' => $obra,
+        return $this->render('view', [
+            'model' => $this->findModel($id),
         ]);
-        }
-        throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
-
     }
 
     /**
-     * Creates a new Cliente model.
+     * Creates a new Obra model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Cliente();
-        $model->user_id = Yii::$app->user->identity->getId();
+        $model = new Obra();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -108,7 +76,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Updates an existing Cliente model.
+     * Updates an existing Obra model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -128,7 +96,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Deletes an existing Cliente model.
+     * Deletes an existing Obra model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -142,15 +110,15 @@ class ClienteController extends Controller
     }
 
     /**
-     * Finds the Cliente model based on its primary key value.
+     * Finds the Obra model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Cliente the loaded model
+     * @return Obra the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Cliente::findOne($id)) !== null) {
+        if (($model = Obra::findOne($id)) !== null) {
             return $model;
         }
 
