@@ -33,9 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome_empresa',
             'telemovel',
             'email:email',
-            'imagem',
-            'categoria_id',
-            'status',
         ],
     ]) ?>
 
