@@ -39,8 +39,8 @@ class ClienteController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Cliente();
         $user = User::findOne(Yii::$app->user->identity->getId());
-
         $dataProvider = new SqlDataProvider([
             'sql' => 'SELECT * FROM cliente WHERE user_id='.Yii::$app->user->identity->getId() ,
             'params' => [':status' => 1],
@@ -64,6 +64,7 @@ class ClienteController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -117,7 +118,6 @@ class ClienteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

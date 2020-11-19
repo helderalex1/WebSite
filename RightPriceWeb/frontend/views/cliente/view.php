@@ -18,10 +18,9 @@ $obras = $model->getObras()->asArray()->all();
 ?>
 <div class="cliente-view">
     <h1><?= Html::encode($this->title) ?></h1>
-
     <div class="row mb-5">
         <div class="col">
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <a class="btn btn-primary flex-center" href="#" data-toggle="modal" data-target="#updateCliente">Update</a>
             <?= Html::a('Delete', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -51,13 +50,13 @@ $obras = $model->getObras()->asArray()->all();
         </div>
         <div class="col-md-8 ">
             <p>Obras</p>
-            <table class="table table-striped text-center">
+            <table class="table table-striped text-center p-0">
                 <tbody>
                 <?php for( $i= 0 ; $i<$model->getObras()->count(); $i++){?>
                     <tr>
                         <td><?=$obras[$i]['id'] ?></td>
                         <td><?=$obras[$i]['nome'] ?></td>
-                        <td><a href="#" class="btn btn-primary">Visualizar</a></td>
+                        <td class="p-2"><a href="<?=Url::toRoute(['obra/view', 'id' => $obras[$i]['id'] ]) ?>" class="btn btn-primary">Visualizar</a></td>
                     </tr>
                 <?php } ?>
             </table>
@@ -79,7 +78,7 @@ $obras = $model->getObras()->asArray()->all();
             <div class="container">
 
 
-                <?php $form = ActiveForm::begin(['action' => ['obra/create'], 'method' => 'post']); ?>
+                <?php $form = ActiveForm::begin(['action' => ['/obra/create'], 'method' => 'post']); ?>
 
                 <?= $form->field($obra, 'cliente_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
 
@@ -95,3 +94,33 @@ $obras = $model->getObras()->asArray()->all();
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="updateCliente" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Cliente</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="container">
+                <?php $form = ActiveForm::begin(['action' => ['cliente/update', 'id'=>$model['id']], 'method' => 'post']); ?>
+
+                <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($model, 'Telemovel')->textInput() ?>
+
+                <?= $form->field($model, 'Nif')->textInput() ?>
+
+                <?= $form->field($model, 'Email')->textInput(['maxlength' => true]) ?>
+                <div class="form-group">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                </div>
+
+                <?php ActiveForm::end(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+

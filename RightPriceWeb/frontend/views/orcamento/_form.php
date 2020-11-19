@@ -4,15 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Obra */
+/* @var $model app\models\Orcamento */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="obra-form">
+<div class="orcamento-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'cliente_id')->textInput() ?>
+    <?= $form->field($model, 'obra_id')->textInput() ?>
+
+    <?= $form->field($model, 'data_orcamento')->textInput() ?>
+
+    <?= $form->field($model, 'margem')->textInput() ?>
+
+    <?= $form->field($model, 'total')->textInput() ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 

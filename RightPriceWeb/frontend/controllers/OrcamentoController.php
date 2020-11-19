@@ -2,18 +2,17 @@
 
 namespace frontend\controllers;
 
-use app\models\Orcamento;
 use Yii;
-use app\models\Obra;
+use app\models\Orcamento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ObraController implements the CRUD actions for Obra model.
+ * OrcamentoController implements the CRUD actions for Orcamento model.
  */
-class ObraController extends Controller
+class OrcamentoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,28 +30,41 @@ class ObraController extends Controller
     }
 
     /**
-     * Displays a single Obra model.
+     * Lists all Orcamento models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Orcamento::find(),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single Orcamento model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'orcamento'=> new Orcamento()
         ]);
     }
 
     /**
-     * Creates a new Obra model.
+     * Creates a new Orcamento model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Obra();
+        $model = new Orcamento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -64,7 +76,7 @@ class ObraController extends Controller
     }
 
     /**
-     * Updates an existing Obra model.
+     * Updates an existing Orcamento model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -84,7 +96,7 @@ class ObraController extends Controller
     }
 
     /**
-     * Deletes an existing Obra model.
+     * Deletes an existing Orcamento model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -98,15 +110,15 @@ class ObraController extends Controller
     }
 
     /**
-     * Finds the Obra model based on its primary key value.
+     * Finds the Orcamento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Obra the loaded model
+     * @return Orcamento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Obra::findOne($id)) !== null) {
+        if (($model = Orcamento::findOne($id)) !== null) {
             return $model;
         }
 
