@@ -57,4 +57,9 @@ class Categoria extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::className(), ['categoria_id' => 'id']);
     }
+
+    public function getCatergoriaNome()
+    {
+        return $this->nome_Categoria;
+    }
 }

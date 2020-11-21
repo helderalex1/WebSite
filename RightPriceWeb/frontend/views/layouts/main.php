@@ -58,7 +58,7 @@ AppAsset::register($this);
                 ],
             ];
             $menuItems[] = ['label' => 'Produtos', 'url' => ['/site/signup']];
-            $menuItems[] = ['label' => 'Instaladores', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => 'Instaladores', 'url' => ['/friend']];
         }else if(isset($role['instalador'])){
             $brand =  [
                 'brandLabel' => Yii::$app->name,
@@ -68,7 +68,7 @@ AppAsset::register($this);
                 ],
             ];
             $menuItems[] = ['label' => 'Clientes', 'url' => ['/cliente']];
-            $menuItems[] = ['label' => 'Fornecedores', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => 'Fornecedores', 'url' => ['/friend']];
         }
         $menuItems[] = ['label' => ''. ucfirst(Yii::$app->user->identity->username).'' , 'url' => ['/user/view', 'id' => Yii::$app->user->identity->getId()]];
         $menuItems[] = '<li>'
