@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $obras = $model->getObras()->asArray()->all();
 ?>
 <div class="cliente-view">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Cliente: <?= Html::encode($this->title) ?></h1>
     <div class="row mb-5">
         <div class="col">
             <a class="btn btn-primary flex-center" href="#" data-toggle="modal" data-target="#updateCliente">Update</a>

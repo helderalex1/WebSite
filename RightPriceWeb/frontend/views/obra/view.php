@@ -2,11 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Obra */
 $cliente = $model->getCliente()->asArray()->all();
+$orcamentos = $model->getOrcamentos()->asArray()->all();
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['/cliente']];
 $this->params['breadcrumbs'][] = ['label' => $cliente[0]['nome'] , 'url' => ['/cliente/view', 'id'=> $cliente[0]['id']]];
@@ -14,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="obra-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Obra: <?= Html::encode($this->title) ?></h1>
     <div class="row mb-5">
         <div class="col">
             <p>
@@ -35,11 +37,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-    <!-- ESTATISTICAS DA OBRA -->
     <div class="row justify-content-center">
-        <div class="col "></div>
-        <div class="col "></div>
-        <div class="col "></div>
+        <div class="col-md-12">
+            <h3>Orçamentos:</h3>
+            <table class="table table-striped text-center p-0">
+            <?php for( $i= 0 ; $i<$model->getOrcamentos()->count(); $i++){?>
+                <tr>
+                    <td><?=$orcamentos[$i]['id'] ?></td>
+                    <td><?=$orcamentos[$i]['nome'] ?></td>
+                    <td><?=$orcamentos[$i]['total']?>€</td>
+                    <td class="p-2"><a href="<?=Url::toRoute(['orcamento/view', 'id' => $orcamentos[$i]['id'] ]) ?>" class="btn btn-primary">Visualizar</a></td>
+                </tr>
+            <?php } ?>
+            </table>
+        </div>
     </div>
 
 </div>
