@@ -22,6 +22,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
+            ['username', 'trim'],
             // username and password are both required
             [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
@@ -55,14 +56,24 @@ class LoginForm extends Model
      */
     public function login()
     {
-        $role = \Yii::$app->authManager->getRolesByUser($this->getUser()->getId());
-        if(isset($role['admin'])){
-            return Yii::$app->session->setFlash('error', 'There was an error with your login');
-        }
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-        
+
+        return false;
+    }
+
+    public function getRole()
+    {
+        if($this->getUser()==null){
+            return Yii::$app->session->setFlash('error', "There was an error with your login");
+        }
+
+        $role = \Yii::$app->authManager->getRolesByUser($this->getUser()->getId());
+
+        if($role['admin']->name ==='admin'){
+            return $role['admin']->name;
+        }
         return false;
     }
 
