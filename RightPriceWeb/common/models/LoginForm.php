@@ -71,7 +71,7 @@ class LoginForm extends Model
 
         $role = \Yii::$app->authManager->getRolesByUser($this->getUser()->getId());
 
-        if($role['admin']->name ==='admin'){
+        if(isset($role['admin']->name)){
             return $role['admin']->name;
         }
         return false;
