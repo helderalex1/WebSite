@@ -74,8 +74,8 @@ class Cliente extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getObras()
+    public function getOcamentos()
     {
-        return $this->hasMany(Obra::className(), ['cliente_id' => 'id']);
+        return $this->hasMany(Orcamento::className(), ['cliente_id' => 'id']);
     }
 }

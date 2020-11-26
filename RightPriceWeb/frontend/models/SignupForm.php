@@ -11,6 +11,7 @@ use common\models\User;
 class SignupForm extends Model
 {
     public $username;
+    public $nome;
     public $email;
     public $password;
     public $categoria_id;
@@ -37,6 +38,9 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
+            ['nome', 'trim'],
+            ['nome', 'required'],
+
             ['categoria_id', 'trim'],
             ['categoria_id', 'required'],
 
@@ -49,6 +53,7 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
+            'nome' => 'Nome Completo',
             'categoria_id' => 'Categoria',
             'role' => 'Tipo de utilizador',
         ];
@@ -63,6 +68,7 @@ class SignupForm extends Model
     {
         if ($this->validate()) {
             $user = new User();
+            $user->nome = $this->nome;
             $user->username = $this->username;
             $user->email = $this->email;
             $user->setPassword($this->password);

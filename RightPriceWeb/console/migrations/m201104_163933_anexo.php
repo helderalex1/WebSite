@@ -3,35 +3,36 @@
 use yii\db\Migration;
 
 /**
- * Class m201104_144738_obra
+ * Class m201104_163933_anexo
  */
-class m201104_144738_obra extends Migration
+class m201104_163933_anexo extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('obra', [
+        $this->createTable('anexo', [
             'id' => $this->primaryKey(),
-            'cliente_id' => $this->integer()->notNull(),
+            'orcamento_id' => $this->integer()->notNull(),
             'nome' => $this->string()->notNull(),
+            'imagem' => $this->binary(),
         ]);
 
         $this->createIndex(
-            'idx-obra-cliente_id',
-            'obra',
-            'cliente_id'
+            'idx-anexo-orcamento_id',
+            'anexo',
+            'orcamento_id'
         );
-
         $this->addForeignKey(
-            'fk-obra-cliente_id',
-            'obra',
-            'cliente_id',
-            'cliente',
+            'fk-anexo-orcamento_id',
+            'anexo',
+            'orcamento_id',
+            'orcamento',
             'id',
             'CASCADE'
         );
+
     }
 
     /**
@@ -39,7 +40,7 @@ class m201104_144738_obra extends Migration
      */
     public function safeDown()
     {
-        echo "m201104_144738_obra cannot be reverted.\n";
+        echo "m201104_163933_anexo cannot be reverted.\n";
 
         return false;
     }
@@ -53,7 +54,7 @@ class m201104_144738_obra extends Migration
 
     public function down()
     {
-        echo "m201104_144738_obra cannot be reverted.\n";
+        echo "m201104_163933_anexo cannot be reverted.\n";
 
         return false;
     }

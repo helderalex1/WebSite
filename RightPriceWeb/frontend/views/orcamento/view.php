@@ -7,13 +7,11 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Orcamento */
 
 
-$obra = $model->getObra()->asArray()->all();
-$cliente = \app\models\Cliente::findOne($obra[0]['cliente_id']);
+$cliente = $model->getCliente()->asArray()->all();
 $this->title = $model['nome'];
 
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['/cliente']];
-$this->params['breadcrumbs'][] = ['label' => $cliente['nome'] , 'url' => ['/cliente/view', 'id'=> $cliente['id']]];
-$this->params['breadcrumbs'][] = ['label' => $obra[0]['nome'] , 'url' => ['/obra/view', 'id'=> $obra[0]['id']]];;
+$this->params['breadcrumbs'][] = ['label' => $cliente[0]['nome'] , 'url' => ['/cliente/view', 'id'=> $cliente[0]['id']]];
 $this->params['breadcrumbs'][] = $model['nome'];
 \yii\web\YiiAsset::register($this);
 ?>

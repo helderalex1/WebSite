@@ -1,6 +1,5 @@
 <?php
 
-use app\models\Obra;
 use yii\bootstrap4\ActiveForm;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -9,12 +8,12 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Cliente */
+$orcamentos =  $model->getOcamentos()->asArray()->all();
 
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-$obras = $model->getObras()->asArray()->all();
 ?>
 <div class="cliente-view">
     <h1>Cliente: <?= Html::encode($this->title) ?></h1>
@@ -30,7 +29,7 @@ $obras = $model->getObras()->asArray()->all();
             ]) ?>
         </div>
         <div class="col text-right">
-            <a class="btn btn-success flex-center" href="#" data-toggle="modal" data-target="#adicionarObra">Adicionar Obra</a>
+            <a class="btn btn-success flex-center" href="#" data-toggle="modal" data-target="#adicionarOrcamento">Adicionar Orçamento</a>
         </div>
     </div>
 
@@ -52,37 +51,35 @@ $obras = $model->getObras()->asArray()->all();
             <p>Obras</p>
             <table class="table table-striped text-center p-0">
                 <tbody>
-                <?php for( $i= 0 ; $i<$model->getObras()->count(); $i++){?>
+                <?php for( $i= 0 ; $i<$model->getOcamentos()->count(); $i++){?>
                     <tr>
-                        <td><?=$obras[$i]['id'] ?></td>
-                        <td><?=$obras[$i]['nome'] ?></td>
-                        <td class="p-2"><a href="<?=Url::toRoute(['obra/view', 'id' => $obras[$i]['id'] ]) ?>" class="btn btn-primary">Visualizar</a></td>
+                        <td><?=$orcamentos[$i]['id'] ?></td>
+                        <td><?=$orcamentos[$i]['nome'] ?></td>
+                        <td class="p-2"><a href="<?=Url::toRoute(['orcamento/view', 'id' => $orcamentos[$i]['id'] ]) ?>" class="btn btn-primary">Visualizar</a></td>
                     </tr>
                 <?php } ?>
             </table>
         </div>
     </div>
 </div>
-</div>
 
 
-<div class="modal fade" id="adicionarObra" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="adicionarOrcamento" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Obra</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Orcamento</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="container">
+                <?php $form = ActiveForm::begin(['action' => ['/orcamento/create'], 'method' => 'post']); ?>
 
+                <?= $form->field($orcamento, 'cliente_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
 
-                <?php $form = ActiveForm::begin(['action' => ['/obra/create'], 'method' => 'post']); ?>
-
-                <?= $form->field($obra, 'cliente_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
-
-                <?= $form->field($obra, 'nome') ?>
+                <?= $form->field($orcamento, 'nome') ?>
+                <?= $form->field($orcamento, 'margem')->input('number', ['min' => 0, 'max' => 102, 'step' => 1])->label(false)?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
