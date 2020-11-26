@@ -18,7 +18,7 @@ class FriendController extends \yii\web\Controller
             $count = 0;
             for($i=0; $i< count($fornecedores);$i++){
                 $user = User::findOne($fornecedores[$i]);
-                if($user['status']==10){
+                if($user != null && $user['status']==10){
                     $data[$count]=$user;
                     $count++;
                 }
