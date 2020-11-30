@@ -33,65 +33,66 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
     </div>
-
-    <table class="table mt-5">
-        <thead>
-        <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Nome Completo</th>
-            <th scope="col">email</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Tipo de utilizador</th>
-            <th scope="col">Status</th>
-            <th scope="col">Opções</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($users as $user){?>
+    <div class="overflow-auto" style="height: 80vh;">
+        <table class="table mt-5 overflow-auto" >
+            <thead>
             <tr>
-                <th scope="row"><?=$user['username']?></th>
-                <td><?=$user['nome']?></td>
-                <td><?=$user['email']?></td>
-                <td><?php foreach ($categorias as $categoria){
-                        if($categoria['id'] == $user['categoria_id']){
-                            echo $categoria['nome_Categoria'];
-                        }
-                    }
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    $role=\Yii::$app->authManager->getRolesByUser($user['id']);
-                    if(isset($role['fornecedor'])){
-                        echo 'Fornecedor';
-                    }else{
-                        echo 'Instalador';
-                    }
-                    ?>
-                </td>
-                <td>
-                    <?php
-
-                    if($user['status']==9){
-                        echo 'Novo';
-                    }elseif($user['status']==0){
-                        echo 'Bloqueado';
-                    }else{
-                        echo 'Ativo';
-                    }
-                    ?>
-                </td>
-                <td>
-                    <?php
-                    if($user['status']!=10){
-                        echo Html::a('Permitir', ['validate', 'id' => $user['id']], ['class' => 'btn btn-success']);
-                    }else{
-                        echo Html::a('Bloquear', ['validate', 'id' => $user['id']], ['class' => 'btn btn-danger']);
-                    }
-                    ?>
-                </td>
+                <th scope="col">Username</th>
+                <th scope="col">Nome Completo</th>
+                <th scope="col">email</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Tipo de utilizador</th>
+                <th scope="col">Status</th>
+                <th scope="col">Opções</th>
             </tr>
-        <?php }?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <?php foreach ($users as $user){?>
+                <tr>
+                    <th scope="row"><?=$user['username']?></th>
+                    <td><?=$user['nome']?></td>
+                    <td><?=$user['email']?></td>
+                    <td><?php foreach ($categorias as $categoria){
+                            if($categoria['id'] == $user['categoria_id']){
+                                echo $categoria['nome_Categoria'];
+                            }
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        $role=\Yii::$app->authManager->getRolesByUser($user['id']);
+                        if(isset($role['fornecedor'])){
+                            echo 'Fornecedor';
+                        }else{
+                            echo 'Instalador';
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+
+                        if($user['status']==9){
+                            echo 'Novo';
+                        }elseif($user['status']==0){
+                            echo 'Bloqueado';
+                        }else{
+                            echo 'Ativo';
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user['status']!=10){
+                            echo Html::a('Permitir', ['validate', 'id' => $user['id']], ['class' => 'btn btn-success']);
+                        }else{
+                            echo Html::a('Bloquear', ['validate', 'id' => $user['id']], ['class' => 'btn btn-danger']);
+                        }
+                        ?>
+                    </td>
+                </tr>
+            <?php }?>
+            </tbody>
+        </table>
+    </div>
 </div>
