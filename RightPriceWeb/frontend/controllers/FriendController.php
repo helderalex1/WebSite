@@ -38,7 +38,10 @@ class FriendController extends \yii\web\Controller
                 'data' => $data
         ]);
         }else if(isset($role['fornecedor'])){
-            echo 'aa';
+            $user = User::findOne(Yii::$app->user->identity->getId());
+            return $this->render('fornecedor',[
+                'data' => $user->getInstaladors()->asArray()->all()
+            ]);
         }else{
 
         }
@@ -51,6 +54,19 @@ class FriendController extends \yii\web\Controller
         $novoFriend->instalador_id = Yii::$app->user->identity->getId();
         $novoFriend->save();
         return $this->redirect(['friend/index']);
+    }
+
+    public function actionRemovefriend($id){
+        $novoFriend = FornecedorInstalador::findOne($id);
+        $novoFriend->delete();
+        return $this->redirect(['friend/view']);
+    }
+
+    public function actionView(){
+        $user = User::findOne(Yii::$app->user->identity->getId());
+        return $this->render('view',[
+            'data' => $user->getFornecedors()->asArray()->all()
+        ]);
     }
 
 }

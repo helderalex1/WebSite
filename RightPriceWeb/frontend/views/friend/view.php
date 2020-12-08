@@ -12,7 +12,12 @@ use yii\widgets\DetailView;
 ?>
 <div class="container">
     <div class="row m-5">
-        <h1>Os seus instaladores</h1>
+        <p>
+            <a href="<?= Url::toRoute(['friend/view']) ?>">As suas conexões</a>
+        </p>
+        <p class="ml-5">
+            <a href="<?= Url::toRoute(['friend/index']) ?>">Adicionar Fornecedores</a>
+        </p>
     </div>
     <?php if(!isset($data)){ ?>
         <div class="row m-5">
@@ -22,20 +27,21 @@ use yii\widgets\DetailView;
                         <?php if($data[$i]['imagem']!=null ){?>
 
                         <?php }else{ ?>
-                            <img class="card-img-top" src="img/transferir.svg" alt="Card image cap">
+                            <img class="card-img-top" src="/img/transferir.svg" alt="Card image cap">
                         <?php } ?>
                         <div class="card-body">
                             <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>
                             <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                             <p class="card-text"><?=$data[$i]['email'] ?></p>
                             <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
+                            <a href="<?= Url::toRoute(['friend/removefriend', 'id' => $data[$i]['id']]) ?>" class="btn btn-danger">Remover</a>
                         </div>
                     </div>
                 <?php } ?>
             <?php } ?>
         </div>
     <?php }else{ ?>
-        <p>Ainda nenhum instalador o adicionou</p>
+    <p>Ainda não adicionou nenhum fornecedor</p>
     <?php } ?>
-</div>
 
+</div>

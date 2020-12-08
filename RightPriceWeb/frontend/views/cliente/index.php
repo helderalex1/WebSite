@@ -16,11 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <script>
-        $('select').selectpicker();
-    </script>
-
-
     <p>
         <a class="btn btn-success flex-center" href="#" data-toggle="modal" data-target="#updateCliente">Adicionar Cliente</a>
     </p>

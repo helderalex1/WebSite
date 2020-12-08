@@ -12,7 +12,12 @@ use yii\widgets\DetailView;
 ?>
 <div class="container">
     <div class="row m-5">
-        <a href="#">As suas conexoes</a>
+        <p>
+            <a href="<?= Url::toRoute(['friend/view']) ?>">As suas conexoes</a>
+        </p>
+        <p class="ml-5">
+            <a href="<?= Url::toRoute(['friend/index']) ?>">Adicionar Fornecedores</a>
+        </p>
     </div>
     <?php if(isset($data)){ ?>
     <div class="row m-5">
@@ -22,7 +27,7 @@ use yii\widgets\DetailView;
                     <?php if($data[$i]['imagem']!=null ){?>
 
                     <?php }else{ ?>
-                    <img class="card-img-top" src="img/transferir.svg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/transferir.svg" alt="Card image cap">
                     <?php } ?>
                     <div class="card-body">
                         <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>
