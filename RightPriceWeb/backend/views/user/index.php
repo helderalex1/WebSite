@@ -47,7 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($users as $user){?>
+            <?php foreach ($users as $user){
+                $role=\Yii::$app->authManager->getRolesByUser($user['id']);
+                if(!isset($role['admin'])){?>
                 <tr>
                     <th scope="row"><?=$user['username']?></th>
                     <td><?=$user['nome']?></td>
@@ -61,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </td>
                     <td>
                         <?php
-                        $role=\Yii::$app->authManager->getRolesByUser($user['id']);
+
                         if(isset($role['fornecedor'])){
                             echo 'Fornecedor';
                         }else{
@@ -91,7 +93,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
                     </td>
                 </tr>
-            <?php }?>
+            <?php }
+            }?>
             </tbody>
         </table>
     </div>

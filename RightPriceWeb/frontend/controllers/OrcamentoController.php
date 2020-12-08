@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use app\models\Categoria;
+use app\models\User;
 use Yii;
 use app\models\Orcamento;
 use yii\data\ActiveDataProvider;
@@ -40,20 +42,6 @@ class OrcamentoController extends Controller
         ];
     }
 
-    /**
-     * Lists all Orcamento models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Orcamento::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Orcamento model.
@@ -61,10 +49,28 @@ class OrcamentoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id, $id_c=null, $id_f=null)
     {
+        $user = User::findOne(Yii::$app->user->identity->getId());
+        $fornecedores = null;
+        $categorias = Categoria::find()->asArray()->all();
+        $produtos = null;
+        if($id_c !=null)
+        {
+            $fornecedores = $user->getFornecedors();
+            $fornecedores = $fornecedores->where(['categoria_id' => $id_c])->asArray()->all();
+        }
+        if($id_f !=null){
+            $fornecedor = User::findOne($id_f);
+            $produtos= $fornecedor->getProdutos()->asArray()->all();
+        }
+
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'categorias' => $categorias,
+            'fornecedores' => $fornecedores,
+            'produtos' =>$produtos
         ]);
     }
 
@@ -76,7 +82,7 @@ class OrcamentoController extends Controller
     public function actionCreate()
     {
         $model = new Orcamento();
-
+        $model->data_orcamento = date('Y-m-d');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -117,7 +123,7 @@ class OrcamentoController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['cliente']);
     }
 
     /**

@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
         <div class="col-md-8 ">
-            <p>Obras</p>
+            <p>Orçamentos</p>
             <table class="table table-striped text-center p-0">
                 <tbody>
                 <?php for( $i= 0 ; $i<$model->getOcamentos()->count(); $i++){?>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($orcamento, 'cliente_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
 
                 <?= $form->field($orcamento, 'nome') ?>
-                <?= $form->field($orcamento, 'margem')->input('number', ['min' => 0, 'max' => 102, 'step' => 1])->label(false)?>
+                <?= $form->field($orcamento, 'margem')->input('number', ['min' => 0, 'max' => 102, 'step' => 1])?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>

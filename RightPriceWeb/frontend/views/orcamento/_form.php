@@ -12,13 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'obra_id')->textInput() ?>
-
-    <?= $form->field($model, 'data_orcamento')->textInput() ?>
-
     <?= $form->field($model, 'margem')->textInput() ?>
-
-    <?= $form->field($model, 'total')->textInput() ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
