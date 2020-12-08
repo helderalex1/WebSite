@@ -57,7 +57,7 @@ AppAsset::register($this);
                     'class' => 'navbar-expand-md navbar-light bg-light',
                 ],
             ];
-            $menuItems[] = ['label' => 'Produtos', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Produtos', 'url' => ['/produto/index']];
             $menuItems[] = ['label' => 'Instaladores', 'url' => ['/friend']];
         }else if(isset($role['instalador'])){
             $brand =  [
