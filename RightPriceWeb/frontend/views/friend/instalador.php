@@ -14,6 +14,7 @@ use yii\widgets\DetailView;
     <div class="row m-5">
         <a href="#">As suas conexoes</a>
     </div>
+    <?php if(isset($data)){ ?>
     <div class="row m-5">
         <?php for( $i=0; $i<count($data); $i++){ ?>
             <?php if($data[$i]!=null ){?>
@@ -28,11 +29,12 @@ use yii\widgets\DetailView;
                         <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                         <p class="card-text"><?=$data[$i]['email'] ?></p>
                         <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
-                        <a href="#" class="btn btn-primary">Adicionar</a>
+                        <a href="<?= Url::toRoute(['friend/addfriend', 'id' => $data[$i]['id']]) ?>" class="btn btn-primary">Adicionar</a>
                     </div>
                 </div>
             <?php } ?>
         <?php } ?>
     </div>
+    <?php }?>
 
 </div>

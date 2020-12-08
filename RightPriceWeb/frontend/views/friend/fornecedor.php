@@ -28,7 +28,7 @@ use yii\widgets\DetailView;
                             <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                             <p class="card-text"><?=$data[$i]['email'] ?></p>
                             <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
-                            <a href="#" class="btn btn-primary">Adicionar</a>
+                            <a href=">" class="btn btn-primary">Adicionar</a>
                         </div>
                     </div>
                 <?php } ?>

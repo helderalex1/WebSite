@@ -39,9 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($action == "view") {
                         return Url::to(['view', 'id' => $model['id']]);
                     }
-                    if ($action == "update") {
-                        return Url::to(['update', 'id' => $model['id']]);
-                    }
                     if ($action == "delete") {
                         return Url::to(['delete', 'id' => $model['id']]);
                     }
