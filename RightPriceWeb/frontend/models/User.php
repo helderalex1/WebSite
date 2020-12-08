@@ -48,6 +48,7 @@ class User extends \yii\db\ActiveRecord
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'categoria_id', 'created_at', 'updated_at'], 'required'],
             [['telemovel', 'categoria_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['nome'], 'string'],
             [['imagem'], 'string'],
             [['username', 'nome_empresa', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],

@@ -14,22 +14,22 @@ class m201104_161908_orcamento extends Migration
     {
         $this->createTable('orcamento', [
             'id' => $this->primaryKey(),
-            'obra_id' => $this->integer()->notNull(),
+            'cliente_id' => $this->integer()->notNull(),
             'data_orcamento' => $this->dateTime(),
             'margem' => $this->integer(),
             'total' => $this->float(),
         ]);
 
         $this->createIndex(
-            'idx-orcamento-obra_id',
+            'idx-orcamento-cliente_id',
             'orcamento',
-            'obra_id'
+            'cliente_id'
         );
         $this->addForeignKey(
-            'fk-orcamento-obra_id',
+            'fk-orcamento-cliente_id',
             'orcamento',
-            'obra_id',
-            'obra',
+            'cliente_id',
+            'cliente',
             'id',
             'CASCADE'
         );

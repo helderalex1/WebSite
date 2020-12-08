@@ -11,23 +11,24 @@ class FriendController extends \yii\web\Controller
     {
         $role= Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->getId());
 
-
-        if($role['instalador']){
+        if(isset($role['instalador'])){
             $fornecedores = Yii::$app->authManager->getUserIdsByRole('fornecedor');
-
             $count = 0;
             for($i=0; $i< count($fornecedores);$i++){
                 $user = User::findOne($fornecedores[$i]);
-                if($user['status']==10){
+                if($user != null && $user['status']==10){
                     $data[$count]=$user;
                     $count++;
                 }
             }
-            return $this->render('index',[
+            return $this->render('instalador',[
                 'data' => $data
         ]);
-        }
+        }else if(isset($role['fornecedor'])){
+            echo 'aa';
+        }else{
 
+        }
 
     }
 

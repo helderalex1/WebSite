@@ -70,14 +70,10 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $this->layout = 'blank';
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->getRole()=='admin' && $model->login()) {
             return $this->goBack();
         } else {
             $model->password = '';
@@ -99,4 +95,6 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+
 }

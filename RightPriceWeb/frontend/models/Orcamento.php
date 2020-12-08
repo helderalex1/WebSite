@@ -34,12 +34,13 @@ class Orcamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['obra_id'], 'required'],
-            [['obra_id', 'margem'], 'integer'],
+            [['cliente_id'], 'required'],
+            [['cliente_id', 'margem'], 'integer'],
+            ['margem', 'integer','max' =>'100', 'min'=>'0'],
             [['data_orcamento'], 'safe'],
             [['total'], 'number'],
             [['nome'], 'string', 'max' => 255],
-            [['obra_id'], 'exist', 'skipOnError' => true, 'targetClass' => Obra::className(), 'targetAttribute' => ['obra_id' => 'id']],
+            [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['cliente_id' => 'id']],
         ];
     }
 
@@ -50,7 +51,7 @@ class Orcamento extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'obra_id' => 'Obra ID',
+            'cliente_id' => 'Cliente ID',
             'data_orcamento' => 'Data Orcamento',
             'margem' => 'Margem',
             'total' => 'Total',
@@ -63,9 +64,9 @@ class Orcamento extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getObra()
+    public function getCliente()
     {
-        return $this->hasOne(Obra::className(), ['id' => 'obra_id']);
+        return $this->hasOne(Cliente::className(), ['id' => 'cliente_id']);
     }
 
     /**

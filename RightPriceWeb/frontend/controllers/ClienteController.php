@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use app\models\Obra;
+use app\models\Orcamento;
 use app\models\User;
 use Yii;
 use app\models\Cliente;
@@ -88,12 +88,12 @@ class ClienteController extends Controller
     public function actionView($id)
     {
         $cliente= $this->findModel($id);
-        $obra = new Obra();
+        $orcamento = new Orcamento();
         if($cliente->user_id == Yii::$app->user->identity->getId())
         {
             return $this->render('view', [
                 'model' => $cliente,
-                'obra' => $obra,
+                'orcamento' => $orcamento,
         ]);
         }
         throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
