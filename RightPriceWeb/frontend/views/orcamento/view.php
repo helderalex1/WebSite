@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $model['nome'];
                             <td><?=$produto['referencia'] ?></td>
                             <td><?=$produto['nome'] ?></td>
                             <td><?=$produto['preco'] ?></td>
-                            <td class="p-2"><a href="" class="btn btn-success">+</a></td>
+                            <td><a href="" ><strong>+</strong></a></td>
                         </tr>
                     <?php }
                 }?>

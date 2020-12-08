@@ -60,6 +60,7 @@ class OrcamentoController extends Controller
             $fornecedores = $user->getFornecedors();
             $fornecedores = $fornecedores->where(['categoria_id' => $id_c])->asArray()->all();
         }
+
         if($id_f !=null){
             $fornecedor = User::findOne($id_f);
             $produtos= $fornecedor->getProdutos()->asArray()->all();
