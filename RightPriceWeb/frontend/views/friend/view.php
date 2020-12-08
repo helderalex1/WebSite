@@ -19,7 +19,7 @@ use yii\widgets\DetailView;
             <a href="<?= Url::toRoute(['friend/index']) ?>">Adicionar Fornecedores</a>
         </p>
     </div>
-    <?php if(isset($data)){ ?>
+    <?php if(count($data)!=0){ ?>
         <div class="row m-5">
             <?php for( $i=0; $i<count($data); $i++){ ?>
                 <?php if($data[$i]!=null ){?>
@@ -41,4 +41,7 @@ use yii\widgets\DetailView;
             <?php } ?>
         </div>
     <?php } ?>
+    <?php if(count($data)==0){ ?>
+    <p>Ainda não adicionou nenhum fornecedor</p>
+    <?php }?>
 </div>
