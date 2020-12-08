@@ -12,8 +12,14 @@ use yii\widgets\DetailView;
 ?>
 <div class="container">
     <div class="row m-5">
-        <a href="#">As suas conexoes</a>
+        <p>
+            <a href="<?= Url::toRoute(['friend/view']) ?>">As suas conexoes</a>
+        </p>
+        <p class="ml-5">
+            <a href="<?= Url::toRoute(['friend/index']) ?>">Adicionar Fornecedores</a>
+        </p>
     </div>
+    <?php if(isset($data)){ ?>
     <div class="row m-5">
         <?php for( $i=0; $i<count($data); $i++){ ?>
             <?php if($data[$i]!=null ){?>
@@ -21,18 +27,19 @@ use yii\widgets\DetailView;
                     <?php if($data[$i]['imagem']!=null ){?>
 
                     <?php }else{ ?>
-                    <img class="card-img-top" src="img/transferir.svg" alt="Card image cap">
+                    <img class="card-img-top" src="/img/transferir.svg" alt="Card image cap">
                     <?php } ?>
                     <div class="card-body">
                         <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>
                         <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                         <p class="card-text"><?=$data[$i]['email'] ?></p>
                         <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
-                        <a href="#" class="btn btn-primary">Adicionar</a>
+                        <a href="<?= Url::toRoute(['friend/addfriend', 'id' => $data[$i]['id']]) ?>" class="btn btn-primary">Adicionar</a>
                     </div>
                 </div>
             <?php } ?>
         <?php } ?>
     </div>
+    <?php }?>
 
 </div>

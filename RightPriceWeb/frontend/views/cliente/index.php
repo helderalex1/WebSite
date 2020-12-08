@@ -16,11 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <script>
-        $('select').selectpicker();
-    </script>
-
-
     <p>
         <a class="btn btn-success flex-center" href="#" data-toggle="modal" data-target="#updateCliente">Adicionar Cliente</a>
     </p>
@@ -38,9 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     if ($action == "view") {
                         return Url::to(['view', 'id' => $model['id']]);
-                    }
-                    if ($action == "update") {
-                        return Url::to(['update', 'id' => $model['id']]);
                     }
                     if ($action == "delete") {
                         return Url::to(['delete', 'id' => $model['id']]);

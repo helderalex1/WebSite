@@ -93,26 +93,6 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[FornecedorInstaladors]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFornecedorInstaladors()
-    {
-        return $this->hasMany(FornecedorInstalador::className(), ['fornecedor_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[FornecedorInstaladors0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getFornecedorInstaladors0()
-    {
-        return $this->hasMany(FornecedorInstalador::className(), ['instalador_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Instaladors]].
      *
      * @return \yii\db\ActiveQuery
