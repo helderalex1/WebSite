@@ -5,38 +5,54 @@ namespace app\controllers;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\Json;
 use yii\rest\ActiveController;
+use Yii;
+use yii\db\Query;
+
 
 class UtilizadorTokenController extends ActiveController
 {
     public $modelClass = 'app\models\User';
 
-   /* public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
-        ];
-        return $behaviors;
-    }*/
+     public function behaviors()
+     {
+         $behaviors = parent::behaviors();
+         $behaviors['authenticator'] = [
+             'class' => QueryParamAuth::className(),
+             'tokenParam' => 'auth_key',
+         ];
+         return $behaviors;
+     }
 
 
-    public function actionNome ($id)
+
+     //funcao para carregar os utilizadores para o admin
+    public function actionUser()
     {
-        $climodel = new $this->modelClass;
-        $ret = $climodel::find()->where("id=" . $id)->one();
-        if ($ret)
-            return ['id' => $id, 'Nome' => $ret->Nome];
-        return ['id' => $id, 'Nome' => "null"];
+        $request = Yii::$app->request;
+        if (!$request->isGet)
+        {
+            Yii::$app->response->statusCode = 400;
+            die();
+        }
+        $User = new $this->modelClass;
+        $List_User = $User::find()->select('id,username,nome,nome_empresa,telemovel,email,imagem,categoria_id,status')->asArray()->all();
+        if ($List_User){
+            return json_encode($List_User);
+        }
+        return json_encode("NUll");
+
+       /* $query = new Query;
+        $script = ($query
+            ->select('u.id,u.username,u.nome,u.nome_empresa,u.telemovel,u.email,u.imagem,u.categoria_id,u.status')
+            ->from('user u'))
+            ->createCommand();
+        $queryResult = $script->query();
+
+        if($queryResult)
+            return $queryResult;
+        return json_encode("NUll");*/
     }
 
-    public function actionUserPendentes()
-    {
-        $climodel = new $this->modelClass;
 
-        $rec = $climodel::find()->where(["Status"=>'9'])->all();
-        if($rec)
-            return Json::encode($rec);
-        return ['null'];
-    }
 
 }

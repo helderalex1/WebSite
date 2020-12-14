@@ -5,6 +5,10 @@ namespace app\controllers;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
 
+
+
+//não vamos utilizar
+
 class CategoriasTokenController extends ActiveController
 {
     public $modelClass = 'app\models\Categoria';
