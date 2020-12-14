@@ -19,13 +19,13 @@ class CategoriaController extends ActiveController
     public $modelClass = 'app\models\Categoria';
 
 
-    //função que vai buscar as categorias para o sistema de login
+  /*  //função que vai buscar as categorias para o sistema de login
     public function actionCategoria(){
         $catemodel= new $this->modelClass;
 
         $categorias= $catemodel::find()->asArray()->all();
         return json_encode($categorias);
-    }
+    }*/
 
 
 

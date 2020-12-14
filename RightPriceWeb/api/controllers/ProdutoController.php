@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+    use yii\filters\auth\QueryParamAuth;
 use app\models\Produto;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -18,25 +19,40 @@ class ProdutoController extends ActiveController
 {
     public $modelClass = 'app\models\Produto';
 
-    //Total produtos
-    public function actionTotal(){
-        $model = new $this->modelClass;
-        $ret = $model::find()->all();
-        return['total'=>count($ret)];
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+            'tokenParam' => 'auth_key',
+        ];
+        return $behaviors;
     }
 
-    //Instalador produtos do seu fornecedor
-    public function actionProdutoforne($id){
-        $query = new Query;
+
+    //Produtos do Fornecedor (id do fornecedor)
+    //serve para quando o fornecedor pedir os seus produtos
+    public function actionProdutosforne($id){
+        $request = Yii::$app->request;
+        if (!$request->isGet)
+        {
+            Yii::$app->response->statusCode = 400;
+            die();
+        }
+        $ModelProduto = new $this->modelClass;
+        $List_produtos = $ModelProduto::find()->select('id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id])->asArray()->all();
+        if ($List_produtos){
+            return json_encode($List_produtos);
+        }
+        return json_encode("NUll");
+
+       /* $query = new Query;
         $script = ($query
-            ->select('p.*')
-            ->from('user u')
-            ->innerJoin('fornecedor_instalador fi','fi.fornecedor_id = u.id')
-            ->innerJoin('user u1','u1.id = fi.instalador_id ')
-            ->innerJoin('produto p', 'p.fornecedor_id=u1.id')
-            ->where('u.id='.$id.' AND u.categoria_id <=> u1.categoria_id'))
+            ->select('p.id,p.imagem,p.nome,p.referencia,p.descricao,p.preco')
+            ->from('produto p')
+            ->where('p.fornecedor_id='.$id))
             ->createCommand();
         $queryResult = $script->query();
-        return $queryResult;
+        return $queryResult;*/
     }
 }
