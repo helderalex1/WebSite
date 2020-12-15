@@ -54,7 +54,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['Utilizador','Utilizador-token','produto','fornecedor-instalador','categoria-token','categoria',],
+                    'controller' => ['Utilizador','Utilizador-token','produto','fornecedor-instalador','categoria','Produto-orcamento','orcamento','cliente'],
                     'pluralize' => false,
                     'extraPatterns' => [
                         //contrololador utilizador
@@ -69,15 +69,21 @@ $config = [
                         //Serve para o fornecedor pedir os seus instaladores
                         //id é do fornecedor
                         'GET forne/{id}' => 'forne',
+                        'GET insta/{id}'=>'Insta',
 
-                        'GET conhecerforne/{id}' => 'conhecerforne',
-                        'GET conhecerinsta/{id}' => 'conhecerinsta',
 
-                        'GET insta/{id}' => 'insta',
+                        //controlador das categorias
+                        //retorna as categorias todas
+                        'GET categoria' =>'categoria',
 
-                        'GET Categoria' =>'Categoria',
+                        //controlador clientes
+                        'GET clientes' => 'cliinsta',
 
-                        //'GET users' =>'Users'
+                        //controlador orcamento
+                        'GET orcamento'=>'orcamento',
+
+                        //controlador dos produtos do orçamento
+                        'GET prodorcamento'=>'ProduOrcamento'
                     ],
 
         ],

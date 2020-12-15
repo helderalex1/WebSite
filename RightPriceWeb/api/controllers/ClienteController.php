@@ -34,7 +34,7 @@ class ClienteController extends ActiveController
     //Mostrar os clientes desse instalador
     //retorna os cliente dos instaladores
     //id é o id do instalador
-    public function actioncliinsta($id)
+    public function actionCliinsta($id)
     {
         $request = Yii::$app->request;
         if (!$request->isGet) {
