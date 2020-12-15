@@ -88,4 +88,20 @@ class Orcamento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Produto::className(), ['id' => 'produto_id'])->viaTable('orcamento_produto', ['orcamento_id' => 'id']);
     }
+
+    public function getOwner()
+    {
+        $cliente = $this->getCliente()->select(['user_id'])->asArray()->all();
+        return $cliente[0]['user_id'];
+    }
+
+    public function getTotal()
+    {
+        foreach ($this->getProdutos()->asArray()->all() as $produto){
+            $preco = Produto::findOne($produto["id"])->preco;
+            $this->total += $preco;
+        }
+        $this->total = $this->total * (1+($this->margem/100));
+        return $this->total ;
+    }
 }

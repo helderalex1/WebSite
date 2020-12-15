@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -16,6 +17,11 @@ $this->params['breadcrumbs'][] = ['label' => $cliente[0]['nome'] , 'url' => ['/c
 $this->params['breadcrumbs'][] = $model['nome'];
 \yii\web\YiiAsset::register($this);
 ?>
+<style>
+    .form-group {
+        margin-bottom: 0px;
+    }
+</style>
 <div class="orcamento-view">
 
     <div class="row align-items-center">
@@ -64,16 +70,24 @@ $this->params['breadcrumbs'][] = $model['nome'];
         <div class="col-md-6 overflow-auto"  style="height: 25vh">
             <table class="table text-center p-0">
                 <tbody>
-                <?php  if($produtos!=null){?>
-                    <?php foreach ($produtos as $produto){ ?>
-                        <tr>
-                            <td><?=$produto['referencia'] ?></td>
-                            <td><?=$produto['nome'] ?></td>
-                            <td><?=$produto['preco'] ?></td>
-                            <td><a href="" ><strong>+</strong></a></td>
-                        </tr>
-                    <?php }
-                }?>
+
+                    <?php  if($produtos!=null){?>
+                        <?php foreach ($produtos as $produto){ ?>
+                            <tr>
+                                <?php $form = ActiveForm::begin(['action' => 'addproduto', 'method' => 'post']); ?>
+                                <?=$form->field($orc_produto, 'orcamento_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
+                                <?=$form->field($orc_produto, 'produto_id')->hiddenInput(['value'=>''.$produto['id'].''])->label(false); ?>
+                                <td><?=$produto['referencia'] ?></td>
+                                <td><?=$produto['nome'] ?></td>
+                                <td><?=$produto['preco'] ?></td>
+                                <td><?= $form->field($orc_produto, 'quantidade',['options' => ['class' => 'form-group']] )->input('number', ['value' => 1,'min' => 0, 'max' => 100, 'step' => 1,'style'=>'margin-bottom: 0px;'])->label(false);?></td>
+                                <td><?= Html::submitButton('+', ['class' => 'btn btn-primary']) ?></a></td>
+                                <?php ActiveForm::end(); ?>
+                            </tr>
+                        <?php }
+                    }?>
+
+                </tbody>
             </table>
         </div>
     </div>

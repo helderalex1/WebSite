@@ -3,9 +3,9 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=gestor_orcamento',
-            'username' => 'root',
-            'password' => '',
+            'dsn' => 'mysql:host=www.marcosferreira.site:3306;dbname=marcosfe_rightprice',
+            'username' => 'marcosfe_rightprice',
+            'password' => 'marcosfe_rightprice',
             'charset' => 'utf8',
         ],
         'mailer' => [
