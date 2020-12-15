@@ -27,4 +27,13 @@ class OrcamentoController extends ActiveController
         return $behaviors;
     }
 
+
+    //função que vai buscar os orcamnetos
+    public function actionOrcamento(){
+        $catemodel= new $this->modelClass;
+
+        $prcamentos= $catemodel::find()->asArray()->all();
+        return json_encode($prcamentos);
+    }
+
 }

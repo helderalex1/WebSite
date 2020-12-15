@@ -54,5 +54,13 @@ class UtilizadorTokenController extends ActiveController
     }
 
 
+    public function actionUserInstalador(){
+
+    }
+
+    public function actionUserFornecedor(){
+
+    }
+
 
 }
