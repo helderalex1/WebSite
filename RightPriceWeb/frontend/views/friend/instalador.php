@@ -33,7 +33,7 @@ use yii\widgets\DetailView;
                         <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>
                         <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                         <p class="card-text"><?=$data[$i]['email'] ?></p>
-                        <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
+                        <p class="card-text"><?= \common\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
                         <a href="<?= Url::toRoute(['friend/addfriend', 'id' => $data[$i]['id']]) ?>" class="btn btn-primary">Adicionar</a>
                     </div>
                 </div>

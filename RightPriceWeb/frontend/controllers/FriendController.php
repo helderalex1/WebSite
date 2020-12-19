@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use app\models\FornecedorInstalador;
+use common\models\FornecedorInstalador;
 use common\models\User;
 use Yii;
 
