@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\FornecedorInstalador;
-use app\models\User;
+use common\models\User;
 use Yii;
 
 class FriendController extends \yii\web\Controller

@@ -2,11 +2,15 @@
 
 namespace frontend\controllers;
 
+use common\models\Categoria;
+use common\models\OrcamentoProduto;
+use common\models\User;
 use Yii;
-use app\models\Orcamento;
+use common\models\Orcamento;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -26,7 +30,7 @@ class OrcamentoController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create','update','delete'],
+                        'actions' => ['index', 'view', 'create','update','delete','addproduto'],
                         'roles' => ['instalador'],
                     ],
                 ],
@@ -40,20 +44,6 @@ class OrcamentoController extends Controller
         ];
     }
 
-    /**
-     * Lists all Orcamento models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Orcamento::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Orcamento model.
@@ -61,11 +51,48 @@ class OrcamentoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id, $id_c=null, $id_f=null)
     {
+        $model = $this->findModel($id);
+        $model->getTotal();
+        if( $model->getOwner() != Yii::$app->user->identity->getId()){
+            throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
+        }
+        $user = User::findOne(Yii::$app->user->identity->getId());
+
+        $orc_produto = new OrcamentoProduto();
+        $fornecedores = null;
+        $categorias = Categoria::find()->asArray()->all();
+        $produtos = null;
+        if($id_c !=null)
+        {
+            $fornecedores = $user->getFornecedors();
+            $fornecedores = $fornecedores->where(['categoria_id' => $id_c])->asArray()->all();
+        }
+
+        if($id_f !=null){
+            $fornecedor = User::findOne($id_f);
+            $produtos= $fornecedor->getProdutos()->asArray()->all();
+        }
+
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'categorias' => $categorias,
+            'fornecedores' => $fornecedores,
+            'produtos' =>$produtos ,
+            'orc_produto' => $orc_produto
         ]);
+    }
+
+    public function actionAddproduto(){
+        $orc_produto = new OrcamentoProduto();
+        if ($orc_produto->load(Yii::$app->request->post()) && $orc_produto->save()) {
+            Yii::$app->session->setFlash('success', "Produto inserido com sucesso");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        Yii::$app->session->setFlash('error', "Erro ao inserir! ( Verifique se o produto não se encontra já inserido )");
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
@@ -76,7 +103,7 @@ class OrcamentoController extends Controller
     public function actionCreate()
     {
         $model = new Orcamento();
-
+        $model->data_orcamento = date('Y-m-d');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -117,7 +144,7 @@ class OrcamentoController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['cliente']);
     }
 
     /**

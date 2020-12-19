@@ -18,13 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <div class="row mt-5">
@@ -34,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-8">
             <strong class="d-inline-block mb-2 text-primary"><?=$model['referencia']?></strong>
             <h3 class="mb-0">
-                <a class="text-dark" href="#"><?=$model['nome']?></a>
+                <?=$model['nome']?>
             </h3>
             <br>
 
             <p class="card-text mb-auto"><?=$model['descricao']?></p>
+            <p class="card-text mb-auto">Preço:<?=$model['preco']?></p>
 
         </div>
     </div>

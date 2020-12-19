@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -88,4 +88,31 @@ class Orcamento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Produto::className(), ['id' => 'produto_id'])->viaTable('orcamento_produto', ['orcamento_id' => 'id']);
     }
+    public function getProdutosQuantidade()
+    {
+         $produtos = $this->hasMany(Produto::className(), ['id' => 'produto_id'])->viaTable('orcamento_produto', ['orcamento_id' => 'id']);
+         $produtos = $produtos->asArray()->all();
+         foreach ( $produtos as $produto){
+             $produto["quantidade"] = OrcamentoProduto::find()->where(['orcamento_id' =>$this['id'], 'produto_id' =>$produto['id']])->select(['quantidade'])->asArray()->all();
+         }
+        return $produtos;
+    }
+
+    public function getOwner()
+    {
+        $cliente = $this->getCliente()->select(['user_id'])->asArray()->all();
+        return $cliente[0]['user_id'];
+    }
+
+    public function getTotal()
+    {
+        foreach ($this->getProdutos()->asArray()->all() as $produto){
+            $preco = Produto::findOne($produto["id"])->preco;
+            $quantidade = $this->getOrcamentoProdutos()->where(['produto_id'=> $produto["id"]])->select('quantidade')->asArray()->all();
+            $this->total += $quantidade[0]["quantidade"] * $preco;
+        }
+        $this->total = $this->total * (1+($this->margem/100));
+        return $this->total ;
+    }
+
 }

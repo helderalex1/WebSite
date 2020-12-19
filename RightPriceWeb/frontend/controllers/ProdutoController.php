@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use app\models\User;
+use common\models\User;
 use Yii;
-use app\models\Produto;
+use common\models\Produto;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use yii\filters\AccessControl;
@@ -129,7 +129,7 @@ class ProdutoController extends Controller
         $model->fornecedor_id = Yii::$app->user->identity->getId();
         if ($model->load(Yii::$app->request->post())) {
             $imagem = UploadedFile::getInstance($model, 'imagem');
-            if($imagem->extension != 'png' && $imagem->extension != 'jpg'){
+            if($imagem->extension != 'png' || $imagem->extension != 'jpg' || $imagem->extension!=''){
                 return $this->render('create', ['model' => $model,]);
             }
             $unique_name = uniqid('file_');

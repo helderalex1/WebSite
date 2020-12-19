@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 use yii\web\UploadedFile;
@@ -22,6 +22,7 @@ use yii\web\UploadedFile;
  */
 class Produto extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +37,7 @@ class Produto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fornecedor_id', 'nome', 'referencia'], 'required'],
+            [['fornecedor_id', 'nome', 'referencia','imagem','preco'], 'required'],
             [['fornecedor_id'], 'integer'],
             [['imagem'], 'string'],
             [['preco'], 'number'],
@@ -90,6 +91,8 @@ class Produto extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'fornecedor_id']);
     }
+
+
 
 
 }
