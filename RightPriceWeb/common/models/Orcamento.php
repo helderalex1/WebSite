@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "orcamento".
@@ -88,12 +89,15 @@ class Orcamento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Produto::className(), ['id' => 'produto_id'])->viaTable('orcamento_produto', ['orcamento_id' => 'id']);
     }
+
     public function getProdutosQuantidade()
     {
-         $produtos = $this->hasMany(Produto::className(), ['id' => 'produto_id'])->viaTable('orcamento_produto', ['orcamento_id' => 'id']);
+         $produtos = $this->getProdutos();
+;
          $produtos = $produtos->asArray()->all();
-         foreach ( $produtos as $produto){
-             $produto["quantidade"] = OrcamentoProduto::find()->where(['orcamento_id' =>$this['id'], 'produto_id' =>$produto['id']])->select(['quantidade'])->asArray()->all();
+         foreach ( $produtos as $produto) {
+             $quantidade= OrcamentoProduto::find()->where(['orcamento_id' => $this['id'], 'produto_id' => $produto['id']])->select(['quantidade'])->asArray()->all();
+             $produtos[0] = ArrayHelper::setValue($produtos,[0, 'quantidade'] , $quantidade );
          }
         return $produtos;
     }

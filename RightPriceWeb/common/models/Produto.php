@@ -23,6 +23,7 @@ use yii\web\UploadedFile;
 class Produto extends \yii\db\ActiveRecord
 {
 
+    public $quantidade = 0;
     /**
      * {@inheritdoc}
      */
