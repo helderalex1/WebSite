@@ -44,7 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($action == "delete") {
                         return Url::to(['delete', 'id' => $model['id']]);
                     }
-
                 }
             ],
         ],

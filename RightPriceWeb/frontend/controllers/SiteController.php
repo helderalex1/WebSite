@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use app\models\Categoria;
+use common\models\Categoria;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;

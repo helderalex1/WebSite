@@ -69,8 +69,6 @@ $this->params['breadcrumbs'][] = $model['nome'];
         </div>
         <div class="col-md-6 overflow-auto"  style="height: 25vh">
             <table class="table text-center p-0">
-                <tbody>
-
                     <?php  if($produtos!=null){?>
                         <?php foreach ($produtos as $produto){ ?>
                             <tr>
@@ -94,12 +92,34 @@ $this->params['breadcrumbs'][] = $model['nome'];
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped text-center p-0">
-                <tbody>
+                <thead>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td class="p-2"><a href="" class="btn btn-primary">Visualizar</a></td>
+                    <td>Referencia</td>
+                    <td>Nome</td>
+                    <td>Quantidade</td>
+                    <td>Preço Unitário</td>
+                    <td>Preço Total</td>
+                    <td>Opções</td>
                 </tr>
+                </thead>
+
+                <?=var_dump($model->getProdutosQuantidade()); ?>
+
+                <?php  if($model->getProdutos()->asArray()->all()!=null){?>
+                    <?php foreach ($model->getOrcamentoProdutos()->asArray()->all() as $produto){ ?>
+                        <tr>
+                            <?php $form = ActiveForm::begin(['action' => '#', 'method' => 'post']); ?>
+                            <td><?=$produto['produto_id'] ?></td>
+                            <td><?= $form->field($orc_produto, 'quantidade',['options' => ['class' => 'form-group']] )->input('number', ['value' => $produto['quantidade'],'min' => 0, 'max' => 100, 'step' => 1,'style'=>'margin-bottom: 0px;'])->label(false);?></td>
+                            <td><?php //$produto['preco'] * (1+($model['margem']/100))  ?></td>
+                            <td>
+                                <?= Html::submitButton('Atualizar', ['class' => 'btn text-info']) ?></a>
+                                <?= Html::submitButton('X', ['class' => 'btn text-danger']) ?></a>
+                            </td>
+                            <?php ActiveForm::end(); ?>
+                        </tr>
+                    <?php }
+                }?>
             </table>
         </div>
 

@@ -2,11 +2,11 @@
 
 namespace frontend\controllers;
 
-use app\models\Categoria;
-use app\models\OrcamentoProduto;
-use app\models\User;
+use common\models\Categoria;
+use common\models\OrcamentoProduto;
+use common\models\User;
 use Yii;
-use app\models\Orcamento;
+use common\models\Orcamento;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -54,10 +54,8 @@ class OrcamentoController extends Controller
     public function actionView($id, $id_c=null, $id_f=null)
     {
         $model = $this->findModel($id);
-        $orcamento = Orcamento::findOne($id);
-
         $model->getTotal();
-        if( $orcamento->getOwner() != Yii::$app->user->identity->getId()){
+        if( $model->getOwner() != Yii::$app->user->identity->getId()){
             throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
         }
         $user = User::findOne(Yii::$app->user->identity->getId());

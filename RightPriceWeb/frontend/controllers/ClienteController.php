@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use app\models\Orcamento;
-use app\models\User;
+use common\models\Orcamento;
+use common\models\User;
 use Yii;
-use app\models\Cliente;
+use common\models\Cliente;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use yii\filters\AccessControl;

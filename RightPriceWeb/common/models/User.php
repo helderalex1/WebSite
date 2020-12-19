@@ -218,4 +218,56 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+
+
+    /**
+     * Gets query for [[Clientes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClientes()
+    {
+        return $this->hasMany(Cliente::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Instaladors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInstaladors()
+    {
+        return $this->hasMany(User::className(), ['id' => 'instalador_id'])->viaTable('fornecedor_instalador', ['fornecedor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Fornecedors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFornecedors()
+    {
+        return $this->hasMany(User::className(), ['id' => 'fornecedor_id'])->viaTable('fornecedor_instalador', ['instalador_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Produtos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProdutos()
+    {
+        return $this->hasMany(Produto::className(), ['fornecedor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Categoria]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoria()
+    {
+        return $this->hasOne(Categoria::className(), ['id' => 'categoria_id']);
+    }
 }
