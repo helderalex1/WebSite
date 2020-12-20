@@ -100,7 +100,8 @@ class ProdutoController extends Controller
         $model->fornecedor_id = Yii::$app->user->identity->getId();
         if ($model->load(Yii::$app->request->post()) ) {
             $imagem = UploadedFile::getInstance($model, 'imagem');
-            if($imagem->extension != 'png' && $imagem->extension != 'jpg'){
+            if($imagem == '' || $imagem->extension != 'png' && $imagem->extension != 'jpg' ){
+                Yii::$app->session->setFlash('error', "Erro ao inserir! ( Imagem Inválida )");
                 return $this->render('create', ['model' => $model,]);
             }
             $unique_name = uniqid('file_');
@@ -129,13 +130,20 @@ class ProdutoController extends Controller
         $model->fornecedor_id = Yii::$app->user->identity->getId();
         if ($model->load(Yii::$app->request->post())) {
             $imagem = UploadedFile::getInstance($model, 'imagem');
-            if($imagem->extension != 'png' || $imagem->extension != 'jpg' || $imagem->extension!=''){
-                return $this->render('create', ['model' => $model,]);
-            }
-            $unique_name = uniqid('file_');
-            $model->imagem = 'uploads/'.$unique_name .'.'. $imagem->extension;
-            if($model->save()){
+            if($imagem != ''){
+                if($imagem->extension != 'png' && $imagem->extension != 'jpg' ){
+                    Yii::$app->session->setFlash('error', "Erro ao inserir! (Imagem Inválida)");
+                    return $this->render('create', ['model' => $model,]);
+                }
+                if(isset($model->imagem)){
+                    unlink($model->imagem);
+                }
+                $unique_name = uniqid('produto_');
+                $model->imagem = 'uploads/'.$unique_name .'.'. $imagem->extension;
                 $imagem->saveAs('uploads/'.$unique_name.'.'.$imagem->extension);
+            }
+
+            if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }

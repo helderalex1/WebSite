@@ -54,6 +54,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'auth_key', 'password_hash', 'email', 'categoria_id', 'created_at', 'updated_at'], 'required'],
+            [['telemovel', 'categoria_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['imagem'], 'string'],
+            [['username', 'nome_empresa', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+            [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::className(), 'targetAttribute' => ['categoria_id' => 'id']],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['categoria_id','integer'],
@@ -63,7 +72,20 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'categoria_id' => 'Categoria',
+            'id' => 'ID',
+            'username' => 'Username',
+            'nome_empresa' => 'Nome Empresa',
+            'telemovel' => 'Telemovel',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'imagem' => 'Imagem',
+            'categoria_id' => 'Categoria ID',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
         ];
     }
 

@@ -16,24 +16,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php /* Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])*/ ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'username',
-            'nome_empresa',
-            'telemovel',
-            'email:email',
-        ],
-    ]) ?>
+    <div class="row m-5">
+        <div class="col-md-4">
+            <img class="card-img-right flex-auto d-none d-md-block" src="/<?=$model['imagem']?>" width="100%" alt="Card image cap">
+        </div>
+        <div class="col-md-8">
+            <strong class="d-inline-block mb-2 text-primary"><?=$model['username']?></strong>
+            <h3 class="mb-0"><?=$model['nome_empresa']?></h3>
+            <p class="mb-0"><?=$model['nome']?></p>
+            <br>
+
+            <p class="card-text mb-auto"><?=$model['telemovel']?></p>
+            <p class="card-text mb-auto"><?=$model['email']?></p>
+
+        </div>
+    </div>
 
 </div>

@@ -30,7 +30,7 @@ class OrcamentoController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create','update','delete','addproduto'],
+                        'actions' => ['index', 'view', 'create','update','delete','addproduto', 'updateproduto','deleteproduto'],
                         'roles' => ['instalador'],
                     ],
                 ],
@@ -85,16 +85,6 @@ class OrcamentoController extends Controller
         ]);
     }
 
-    public function actionAddproduto(){
-        $orc_produto = new OrcamentoProduto();
-        if ($orc_produto->load(Yii::$app->request->post()) && $orc_produto->save()) {
-            Yii::$app->session->setFlash('success', "Produto inserido com sucesso");
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-        Yii::$app->session->setFlash('error', "Erro ao inserir! ( Verifique se o produto não se encontra já inserido )");
-        return $this->redirect(Yii::$app->request->referrer);
-    }
-
     /**
      * Creates a new Orcamento model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -146,6 +136,49 @@ class OrcamentoController extends Controller
 
         return $this->redirect(['cliente']);
     }
+
+    public function actionAddproduto(){
+            $orc_produto = new OrcamentoProduto();
+            if ($orc_produto->load(Yii::$app->request->post()) && $orc_produto->save()) {
+                Yii::$app->session->setFlash('success', "Produto inserido com sucesso");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            Yii::$app->session->setFlash('error', "Erro ao inserir! ( Verifique se o produto não se encontra já inserido )");
+            return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUpdateproduto(){
+        $post = Yii::$app->request->post();
+        $post = $post["OrcamentoProduto"];
+        $model = $this->findModel($post["orcamento_id"]);
+        if( $model->getOwner() != Yii::$app->user->identity->getId()){
+            throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
+        }
+
+        $model = OrcamentoProduto::find()->where(['orcamento_id' => $post["orcamento_id"], 'produto_id' => $post["produto_id"]])->one();
+        $model->quantidade = $post["quantidade"];
+        if ( $model->save()) {
+            Yii::$app->session->setFlash('info', "Produto atualizado com sucesso");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        Yii::$app->session->setFlash('error', "Erro ao atualizar!");
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    public function actionDeleteproduto($id, $produto){
+        $model = $this->findModel($id);
+        if( $model->getOwner() != Yii::$app->user->identity->getId()){
+            throw new HttpException(403, Yii::t('app', 'You are not allowed to perform this action.'));
+        }
+        $model = OrcamentoProduto::find()->where(['orcamento_id' => $id, 'produto_id' => $produto])->one();
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', "Produto removido com sucesso");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        Yii::$app->session->setFlash('error', "Erro ao remover!");
+        return $this->redirect(Yii::$app->request->referrer);
+
+    }
+
 
     /**
      * Finds the Orcamento model based on its primary key value.
