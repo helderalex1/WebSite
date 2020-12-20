@@ -95,9 +95,11 @@ class Orcamento extends \yii\db\ActiveRecord
          $produtos = $this->getProdutos();
 ;
          $produtos = $produtos->asArray()->all();
+         $i=0;
          foreach ( $produtos as $produto) {
-             $quantidade= OrcamentoProduto::find()->where(['orcamento_id' => $this['id'], 'produto_id' => $produto['id']])->select(['quantidade'])->asArray()->all();
-             $produtos[0] = ArrayHelper::setValue($produtos,[0, 'quantidade'] , $quantidade );
+             $array= OrcamentoProduto::find()->where(['orcamento_id' => $this['id'], 'produto_id' => $produto['id']])->select(['quantidade'])->asArray()->all();
+             $produtos[$i]["quantidade"] = $array[0]['quantidade'];
+             $i++;
          }
         return $produtos;
     }

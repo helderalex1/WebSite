@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -85,9 +86,31 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagem = UploadedFile::getInstance($model, 'imagem');
+        $flag = 0;
+        if($imagem == null){
+            $string = $model->imagem;
+            $flag =1;
+        }
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($flag != 1){
+                if ( $imagem->extension != 'png' && $imagem->extension != 'jpg' ) {
+                    Yii::$app->session->setFlash('error', "Erro ao inserir! (Imagem Inválida)");
+                    return $this->render('update', ['model' => $model,]);
+                }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                if(isset($model->imagem ) && $model->imagem !=''){
+                    unlink($model->imagem);
+                }
+
+                $unique_name = uniqid('prof_');
+                $string = 'uploads/' . $unique_name . '.' . $imagem->extension;
+                $imagem->saveAs($string);
+            }
+            $model->imagem = $string;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -102,12 +125,14 @@ class UserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    /*public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        if(isset($model->imagem ) && $model->imagem !=''){
+            unlink($model->imagem);
+        }
         return $this->redirect(['index']);
-    }
+    }*/
 
     /**
      * Finds the User model based on its primary key value.

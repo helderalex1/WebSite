@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $model['nome'];
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-12">
             <table class="table table-striped text-center p-0">
                 <thead>
@@ -102,19 +102,20 @@ $this->params['breadcrumbs'][] = $model['nome'];
                     <td>Opções</td>
                 </tr>
                 </thead>
-
-                <?=var_dump($model->getProdutosQuantidade()); ?>
-
-                <?php  if($model->getProdutos()->asArray()->all()!=null){?>
-                    <?php foreach ($model->getOrcamentoProdutos()->asArray()->all() as $produto){ ?>
+                <?php  if($model->getProdutosQuantidade()!=null){?>
+                    <?php foreach ($model->getProdutosQuantidade() as $produto){ ?>
                         <tr>
-                            <?php $form = ActiveForm::begin(['action' => '#', 'method' => 'post']); ?>
-                            <td><?=$produto['produto_id'] ?></td>
+                            <?php $form = ActiveForm::begin(['action' => 'updateproduto', 'method' => 'post']); ?>
+                            <?=$form->field($orc_produto, 'orcamento_id')->hiddenInput(['value'=>''.$model->id.''])->label(false); ?>
+                            <?=$form->field($orc_produto, 'produto_id')->hiddenInput(['value'=>''.$produto['id'].''])->label(false); ?>
+                            <td><?=$produto['referencia'] ?></td>
+                            <td><?=$produto['nome'] ?></td>
                             <td><?= $form->field($orc_produto, 'quantidade',['options' => ['class' => 'form-group']] )->input('number', ['value' => $produto['quantidade'],'min' => 0, 'max' => 100, 'step' => 1,'style'=>'margin-bottom: 0px;'])->label(false);?></td>
-                            <td><?php //$produto['preco'] * (1+($model['margem']/100))  ?></td>
+                            <td><?=$produto['preco'] * (1+($model['margem']/100))  ?></td>
+                            <td><?=($produto['preco'] * (1+($model['margem']/100)))* $produto['quantidade']  ?></td>
                             <td>
                                 <?= Html::submitButton('Atualizar', ['class' => 'btn text-info']) ?></a>
-                                <?= Html::submitButton('X', ['class' => 'btn text-danger']) ?></a>
+                                <a class="btn text-danger" href="<?=Url::toRoute(['orcamento/deleteproduto', 'id' => $model->id, 'produto'=>$produto['id']]) ?>">X</a>
                             </td>
                             <?php ActiveForm::end(); ?>
                         </tr>

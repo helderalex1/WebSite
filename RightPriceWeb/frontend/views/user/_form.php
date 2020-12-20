@@ -12,13 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nome_empresa')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'telemovel')->textInput() ?>
 
-    <?= $form->field($model, 'imagem')->textInput() ?>
+    <?= $form->field($model, 'imagem')->fileInput() ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
