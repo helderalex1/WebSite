@@ -156,9 +156,15 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            if($model->signup()){
+
                 Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
                 return $this->goHome();
+            }
+
         }
 
         $roles[0] = \Yii::$app->authManager->getRole('fornecedor');

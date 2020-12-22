@@ -13,6 +13,7 @@ class SignupForm extends Model
     public $username;
     public $nome;
     public $email;
+    public $imagem;
     public $password;
     public $categoria_id;
     public $role;
@@ -37,6 +38,9 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['imagem', 'string'],
+            ['imagem', 'default', 'value' => '/uploads/default.png'],
 
             ['nome', 'trim'],
             ['nome', 'required'],
@@ -66,11 +70,13 @@ class SignupForm extends Model
      */
     public function signup()
     {
+
         if ($this->validate()) {
             $user = new User();
             $user->nome = $this->nome;
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->imagem = $this->imagem;
             $user->setPassword($this->password);
             $user->generateAuthKey();
             $user->generateEmailVerificationToken();

@@ -2,7 +2,7 @@
 return [
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced_test',
+            'dsn' => 'mysql:host=www.marcosferreira.site:3306;dbname=marcosfe_rightprice',
         ],
     ],
 ];

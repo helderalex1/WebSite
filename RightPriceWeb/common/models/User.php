@@ -54,18 +54,17 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'categoria_id', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email', 'categoria_id'], 'required'],
             [['telemovel', 'categoria_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['imagem'], 'string'],
+            [['imagem','nome'], 'string'],
             [['username', 'nome_empresa', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['username'], 'unique'],
-            [['email'], 'unique'],
+            [['email','username'], 'unique'],
             [['password_reset_token'], 'unique'],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::className(), 'targetAttribute' => ['categoria_id' => 'id']],
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            ['categoria_id','integer'],
+            [['status'], 'default', 'value' => self::STATUS_INACTIVE],
+            [['status'], 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['categoria_id'],'integer'],
         ];
     }
 
