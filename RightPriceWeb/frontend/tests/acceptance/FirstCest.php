@@ -1,4 +1,4 @@
-<?php namespace frontend\tests\acceptance;
+<?php namespace frontend\tests;
 use frontend\tests\AcceptanceTester;
 
 class FirstCest
@@ -8,10 +8,9 @@ class FirstCest
     }
 
     // tests
-    public function frontpageWorks(AcceptanceTester $I)
+    public function tryToTest(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->wait(2);
-        $I->see('A NOSSA EQUIPA');
+        $I->see('Home');
     }
 }

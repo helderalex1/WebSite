@@ -1,6 +1,8 @@
-actor: AcceptanceTester
+class_name: AcceptanceTester
 modules:
   enabled:
-    - PhpBrowser:
-        url: 127.0.0.1
-    - \Helper\Acceptance
+    - WebDriver
+  config:
+    WebDriver:
+      url: 'http://rightprice.frontend/'
+      browser: chrome
