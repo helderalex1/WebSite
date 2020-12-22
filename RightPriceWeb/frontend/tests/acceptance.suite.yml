@@ -2,5 +2,5 @@ actor: AcceptanceTester
 modules:
   enabled:
     - PhpBrowser:
-        url: 127.0.0.1
+        url: http://rightprice.frontend/
     - \Helper\Acceptance
