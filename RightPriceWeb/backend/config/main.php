@@ -48,41 +48,48 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/categoria','v1/cliente','v1/Utilizador','v1/Utilizador-token','v1/produto','v1/fornecedor-instalador','v1/Produto-orcamento','v1/orcamento'],
+                    'controller' => ['v1/Utilizador','v1/Utilizador-token','v1/produto','v1/fornecedor-instalador','v1/categoria','v1/cliente','v1/orcamento','v1/Produto-orcamento'],
                     'pluralize' => false,
                     'extraPatterns' => [
-                        //contrololador utilizador
+                        //contrololador utilizador (Serve para o login e o registar). Não necessita de token a enviar
                         'GET login/{username}{password_hash}' => 'login',
-                        'POST Registar' =>'Registar',
-                        //controlador utilizador token (serve para admin carregar utilizadores)
-                        'GET user' =>'User',
+                        'POST registar' =>'registar',
+
+                        //controlador utilizador token (serve para admin carregar utilizadores,instalador carregar os fornecedores e os fornecedores carregar os instaladores)
+                        'GET user' =>'user',
+                        'GET userinstalador' =>'userinstalador',
+                        'GET userfornecedor' =>'userfornecedor',
+
+
                         //controlador produto (O ID é o ID do fornecedor)
                         // serve para pedir os produtos do fornecedor
-                        'GET produtosforne/{id}'=>'produtosforne',
+                        'GET produtosfornecedor/{id_fornecedor}'=>'produtosfornecedor',
+
                         // controlador FornecedorInstalador
                         //Serve para o fornecedor pedir os seus instaladores
                         //id é do fornecedor
-                        'GET forne/{id}' => 'forne',
-                        'GET insta/{id}'=>'Insta',
+                        'GET fornecedor-meus-instaladores/{id_fornecedor}' => 'fornecedormeusinstaladores',
+                        //Serve para o instaldor pedir os seus fornecedores
+                        //id é o do instalador
+                        'GET instalador-meus-fornecedores/{id_instalador}'=>'instaladormeusfornecedores',
 
 
                         //controlador das categorias
-                        //retorna as categorias todas
+                        //retorna as categorias do sistema
                         'GET categoria' =>'categoria',
 
                         //controlador clientes
-                        'GET clientes/{id}' => 'cliinsta',
+                        'GET clientesinstalador/{id_instalador}' => 'clientesinstalador',
 
                         //controlador orcamento
-                        'GET orcamento'=>'orcamento',
+                        'GET orcamentos'=>'orcamentos',
 
                         //controlador dos produtos do orçamento
-                        'GET prodorcamento'=>'ProduOrcamento'
+                        'GET produtosorcamentos'=>'produtosorcamentos'
                     ],
                 ],
             ],
         ],
-
     ],
     'params' => $params,
 ];

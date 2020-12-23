@@ -2,6 +2,7 @@
 
 namespace app\modules\v1\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;
 
@@ -22,14 +23,22 @@ class ProdutoOrcamentoController extends ActiveController
 
 
         //função que vai buscar as os produtos do orçamento
-        public function actionProduOrcamento()
+        //retorna todos os produtos de todos os orcamentos do sistema
+    public function actionProdutosOrcamentos()
     {
-        $catemodel = new $this->modelClass;
+        $request = Yii::$app->request;
 
-        $prcamentos = $catemodel::find()->asArray()->all();
-        return json_encode($prcamentos);
+        if (!$request->isGet) {
+            Yii::$app->response->statusCode = 400;
+            die();
+        }
+
+        $produtosorcamentosmodel = new $this->modelClass;
+        $List_produtosorcamentos = $produtosorcamentosmodel::find()->asArray()->all();
+
+        if ($List_produtosorcamentos){
+            return json_encode($List_produtosorcamentos);
+        }
+        return json_encode("NUll");
     }
-
-
-
 }

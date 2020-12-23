@@ -2,23 +2,36 @@
 
 namespace app\modules\v1\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
-use yii\web\Controller;
 use \GuzzleHttp\json_encode;
 
 
 /**
- * Default controller for the `v1` module
+ * CategoriaController implements the CRUD actions for Categorias model.
  */
+
 class CategoriaController extends ActiveController
 {
     public $modelClass = 'common\models\Categoria';
 
 
+    //funcao que retorna as categorias do sistema
     public function actionCategoria(){
-        $catemodel= new $this->modelClass;
+        $request = Yii::$app->request;
+        if (!$request->isGet) {
+            Yii::$app->response->statusCode = 400;
+            die();
+        }
 
-        $categorias= $catemodel::find()->asArray()->all();
-        return json_encode($categorias);
+        $categoriasmodel= new $this->modelClass;
+        $List_categorias= $categoriasmodel::find()->asArray()->all();
+
+        if ($List_categorias) {
+            return json_encode($List_categorias);
+        }
+        return json_encode("NUll");
+
+
     }
 }

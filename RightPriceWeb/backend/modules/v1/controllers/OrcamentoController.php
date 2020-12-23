@@ -3,12 +3,9 @@
 namespace app\modules\v1\controllers;
 
 use Yii;
-use app\models\Orcamento;
-use yii\data\ActiveDataProvider;
+use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * OrcamentoController implements the CRUD actions for Orcamento model.
@@ -29,11 +26,20 @@ class OrcamentoController extends ActiveController
 
 
     //função que vai buscar os orcamnetos
-    public function actionOrcamento(){
-        $catemodel= new $this->modelClass;
+    //retorna todos os orçamentos do sistema
+    public function actionOrcamentos(){
+        $request = Yii::$app->request;
+        if (!$request->isGet) {
+            Yii::$app->response->statusCode = 400;
+            die();
+        }
 
-        $prcamentos= $catemodel::find()->asArray()->all();
-        return json_encode($prcamentos);
+        $orcamentomodel= new $this->modelClass;
+        $List_orcamentos= $orcamentomodel::find()->asArray()->all();
+
+        if ($List_orcamentos){
+            return json_encode($List_orcamentos);
+        }
+        return json_encode("NUll");
     }
-
 }

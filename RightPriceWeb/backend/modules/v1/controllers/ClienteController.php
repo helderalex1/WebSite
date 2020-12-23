@@ -3,13 +3,9 @@
 namespace app\modules\v1\controllers;
 
 use Yii;
-use common\models\Cliente;
-use yii\data\ActiveDataProvider;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 
 /**
@@ -19,7 +15,6 @@ class ClienteController extends ActiveController
 {
 
     public $modelClass = 'common\models\Cliente';
-
 
 
     public function behaviors()
@@ -37,7 +32,7 @@ class ClienteController extends ActiveController
     //Mostrar os clientes desse instalador
     //retorna os cliente dos instaladores
     //id é o id do instalador
-    public function actionCliinsta($id)
+    public function actionClientesInstalador($id_instalador)
     {
         $request = Yii::$app->request;
         if (!$request->isGet) {
@@ -45,10 +40,11 @@ class ClienteController extends ActiveController
             die();
         }
 
-        $cli_insta = new $this->modelClass;
-        $clientes = $cli_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id])->asArray()->all();
-        if ($clientes) {
-            return json_encode($clientes);
+        $clientes_insta = new $this->modelClass;
+        $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
+
+        if ($List_clientes) {
+            return json_encode($List_clientes);
         }
         return json_encode("NUll");
     }
