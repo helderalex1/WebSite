@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\v1\controllers;
+namespace app\modules\api\controllers;
 
 use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;

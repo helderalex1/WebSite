@@ -12,13 +12,17 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'v1' => [
-            'class' => 'app\modules\v1\Module',
+        'api' => [
+            'class' => 'app\modules\api\Module',
         ],
     ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' =>
+                [
+                    'application/json' => 'yii\web\JsonParser',
+                ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -48,7 +52,7 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/Utilizador','v1/Utilizador-token','v1/produto','v1/fornecedor-instalador','v1/categoria','v1/cliente','v1/orcamento','v1/Produto-orcamento'],
+                    'controller' => ['api/utilizador','api/utilizador-token','api/produto','api/fornecedor-instalador','api/categoria','api/cliente','api/orcamento','api/produto-orcamento'],
                     'pluralize' => false,
                     'extraPatterns' => [
                         //contrololador utilizador (Serve para o login e o registar). Não necessita de token a enviar

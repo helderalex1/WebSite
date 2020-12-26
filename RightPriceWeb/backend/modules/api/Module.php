@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\v1;
+namespace app\modules\api;
 
 /**
- * v1 module definition class
+ * api module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\v1\controllers';
+    public $controllerNamespace = 'app\modules\api\controllers';
 
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
+        \Yii::$app->user->enableSession = false;
         // custom initialization code goes here
     }
 }
