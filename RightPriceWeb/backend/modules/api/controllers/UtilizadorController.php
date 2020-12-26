@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\v1\controllers;
+namespace app\modules\api\controllers;
 
 use common\models\AuthAssignment;
 use common\models\User;
@@ -57,6 +57,7 @@ class UtilizadorController extends ActiveController
         $clientemodel = new $this->modelClass;
         $categoriamodel = new $this->modelClassCategoria;
 
+
         $usernamene_exists=null;
         $emai_exists=null;
 
@@ -98,6 +99,13 @@ class UtilizadorController extends ActiveController
                 $auth->user_id= $userid->id;
                 $auth->save(false);
 
+                if (strcmp($user_request["funcao"]=="fornecedor")){
+                    $this->FazPublish("NovoCliente",json_encode("Tem um novo Fornecedor a aceitar. O cliente chama-se ".$User->nome."."));
+                }else if (strcmp($user_request["funcao"]=="instalador")){
+                    $this->FazPublish("NovoCliente",json_encode("Tem um novo instalador a aceitar. O cliente chama-se ".$User->nome."."));
+                }else{
+                    $this->FazPublish("NovoCliente",json_encode("Tem um novo cliente a aceitar. O cliente chama-se ".$User->nome."."));
+                }
                 return  json_encode("Conta registada com sucesso");
             }
             return json_encode("Erro a registar utilizador. Tente mais tarde ou entre em contacto com os administradores");
@@ -120,5 +128,21 @@ class UtilizadorController extends ActiveController
     {
        return $verification_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
+
+
+    //função que envia a menssagem do mosquitto no Tópico defeinido
+    public function FazPublish($canal,$msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $client_id = "phpMQTT-publisher"; // unique!
+        $mqtt = new mosquitto\phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL))
+        {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        }
+        else { file_put_contents("debug.output","Time out!"); }
+}
 
 }
