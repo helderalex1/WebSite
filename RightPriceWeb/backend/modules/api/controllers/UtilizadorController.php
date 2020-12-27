@@ -99,9 +99,9 @@ class UtilizadorController extends ActiveController
                 $auth->user_id= $userid->id;
                 $auth->save(false);
 
-                if (strcmp($user_request["funcao"]=="fornecedor")){
+                if (strcmp($user_request["funcao"],"fornecedor")==0){
                     $this->FazPublish("NovoCliente",json_encode("Tem um novo Fornecedor a aceitar. O cliente chama-se ".$User->nome."."));
-                }else if (strcmp($user_request["funcao"]=="instalador")){
+                }else if (strcmp($user_request["funcao"],"instalador"==0)){
                     $this->FazPublish("NovoCliente",json_encode("Tem um novo instalador a aceitar. O cliente chama-se ".$User->nome."."));
                 }else{
                     $this->FazPublish("NovoCliente",json_encode("Tem um novo cliente a aceitar. O cliente chama-se ".$User->nome."."));
@@ -133,7 +133,7 @@ class UtilizadorController extends ActiveController
     //função que envia a menssagem do mosquitto no Tópico defeinido
     public function FazPublish($canal,$msg)
     {
-        $server = "127.0.0.1";
+        $server = "jpla-rpla.asuscomm.com";
         $port = 1883;
         $client_id = "phpMQTT-publisher"; // unique!
         $mqtt = new mosquitto\phpMQTT($server, $port, $client_id);
