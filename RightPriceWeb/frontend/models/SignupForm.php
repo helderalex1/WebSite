@@ -89,7 +89,6 @@ class SignupForm extends Model
             $auth->assign($authorRole, $user->getId());
             return $this->sendEmail($user);
         }
-
         return null;
     }
 

@@ -36,9 +36,12 @@ class Cliente extends \yii\db\ActiveRecord
         return [
             [['user_id', 'nome'], 'required'],
             [['user_id', 'Telemovel', 'Nif'], 'integer'],
-            [['nome', 'Email'], 'string', 'max' => 255],
+            [['nome'], 'string', 'max' => 20],
+            [['Nif'], 'string', 'max' => 9],
+            [['Email'], 'string', 'max' => 255],
             [['Nif'], 'unique'],
             [['Email'], 'unique'],
+            [['Email'], 'email'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
