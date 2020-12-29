@@ -49,6 +49,7 @@ class UtilizadorController extends ActiveController
                return json_encode("username ou password invalida");
            }
        }
+       return json_encode("Erro ao fazer o login. Tente mais tarde ou contacte o suporte");
     }
 
     //função para o registo da aplicação
@@ -91,7 +92,7 @@ class UtilizadorController extends ActiveController
                 $User->categoria_id= $Categoria->id;
                 $User->status = 9;
                 if(!$User->save(false)){
-                    return json_encode("Erro a fazer o registo. Tente mais tarde ou contacte os administrador");
+                    return json_encode("Erro a fazer o registo. Tente mais tarde ou contacte o suporte");
                 }
                 $userid= $clientemodel::find()->where(["username"=>$user_request["username"]])->one();
                 $auth= new AuthAssignment();
@@ -108,7 +109,6 @@ class UtilizadorController extends ActiveController
                 }
                 return  json_encode("Conta registada com sucesso");
             }
-            return json_encode("Erro a registar utilizador. Tente mais tarde ou entre em contacto com os administradores");
         }
     }
 

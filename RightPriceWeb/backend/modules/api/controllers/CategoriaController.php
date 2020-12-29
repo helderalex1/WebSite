@@ -15,7 +15,6 @@ class CategoriaController extends ActiveController
 {
     public $modelClass = 'common\models\Categoria';
 
-
     //funcao que retorna as categorias do sistema
     public function actionCategoria(){
         $request = Yii::$app->request;
@@ -31,7 +30,5 @@ class CategoriaController extends ActiveController
             return json_encode($List_categorias);
         }
         return json_encode("NUll");
-
-
     }
 }
