@@ -29,7 +29,7 @@ class UtilizadorController extends ActiveController
         if (!$request->isGet)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $user = $clientemodel::find()->where(["username"=>$username])->one();
@@ -66,7 +66,7 @@ class UtilizadorController extends ActiveController
         if (!$request->isPost)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do post method");
         }
 
         $user_request= $request->post();
@@ -107,7 +107,7 @@ class UtilizadorController extends ActiveController
                 }else{
                     $this->FazPublish("NovoCliente",json_encode("Tem um novo cliente a aceitar. O cliente chama-se ".$User->nome."."));
                 }
-                return  json_encode("Conta registada com sucesso");
+                return json_encode("Conta registada com sucesso");
             }
         }
     }

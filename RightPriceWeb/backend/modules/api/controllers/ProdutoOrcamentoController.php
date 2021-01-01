@@ -30,7 +30,7 @@ class ProdutoOrcamentoController extends ActiveController
 
         if (!$request->isGet) {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $produtosorcamentosmodel = new $this->modelClass;

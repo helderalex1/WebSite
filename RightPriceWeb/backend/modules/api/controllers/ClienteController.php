@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\FornecedorInstalador;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
@@ -37,16 +38,19 @@ class ClienteController extends ActiveController
         $request = Yii::$app->request;
         if (!$request->isGet) {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $clientes_insta = new $this->modelClass;
         $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
-
-        if ($List_clientes) {
+        $ModelFornecedorInstalador = new FornecedorInstalador();
+        $InstaladorExiste = $ModelFornecedorInstalador::find()->select('fornecedor_id')->where(["instalador_id"=>$id_instalador])->asArray()->one();
+        if ($List_clientes and $InstaladorExiste) {
             return json_encode($List_clientes);
+        }else if($InstaladorExiste){
+            return json_encode("NUll");
         }
-        return json_encode("NUll");
+        throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
     }
 
 }

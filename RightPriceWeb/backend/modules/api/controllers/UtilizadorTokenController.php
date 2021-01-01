@@ -32,7 +32,7 @@ class UtilizadorTokenController extends ActiveController
         if (!$request->isGet)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $User = new $this->modelClass;
@@ -63,7 +63,7 @@ class UtilizadorTokenController extends ActiveController
         if (!$request->isGet)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $query = new Query;
@@ -89,7 +89,7 @@ class UtilizadorTokenController extends ActiveController
         if (!$request->isGet)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $query = new Query;

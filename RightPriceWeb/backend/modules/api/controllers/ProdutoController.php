@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\FornecedorInstalador;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
@@ -32,16 +33,19 @@ class ProdutoController extends ActiveController
         if (!$request->isGet)
         {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $ModelProduto = new $this->modelClass;
         $List_produtos = $ModelProduto::find()->select('id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
-
-        if ($List_produtos){
+        $ModelFornecedorInstalador = new FornecedorInstalador();
+        $FornecedorExiste = $ModelFornecedorInstalador::find()->select('fornecedor_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->one();
+        if ($List_produtos and $FornecedorExiste){
             return json_encode($List_produtos);
+        }else if($FornecedorExiste){
+            return json_encode("Null");
         }
-        return json_encode("NUll");
+        throw new \yii\web\NotFoundHttpException("Provider id not found or didn't exist!");
 
                                     //diferente forma de fazer a query
 

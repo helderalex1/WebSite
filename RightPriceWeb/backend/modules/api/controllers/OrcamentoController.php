@@ -31,7 +31,7 @@ class OrcamentoController extends ActiveController
         $request = Yii::$app->request;
         if (!$request->isGet) {
             Yii::$app->response->statusCode = 400;
-            die();
+            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
         $orcamentomodel= new $this->modelClass;
