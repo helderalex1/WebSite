@@ -35,21 +35,21 @@ class UtilizadorController extends ActiveController
         $user = $clientemodel::find()->where(["username"=>$username])->one();
 
        if(!$user){
-            return json_encode("username ou password invalida");
+            return ["sucesso"=>"false","texto"=>"Username ou password invalida"];
        }else if($user->status == 0 ){
-           return json_encode("Voce foi bloqueado");
+           return ["sucesso"=>"false","texto"=>"Voce foi bloqueado"];
        }else if($user->status == 9  ){
-           return json_encode("A espera da aprovacao dos admins");
+           return ["sucesso"=>"false","texto"=>"A espera da aprovacao dos admins"];
        }else if($user->status == 10  ){
            $Funcao= $funcaomodel::find()->where(["user_id"=>$user->id])->one();
            $hash = $user->password_hash;
            if(Yii::$app->getSecurity()->validatePassword($password, $hash) == true  ){
-                return json_encode(["id"=>$user->id,"nome"=>$user->nome, "nome_empresa"=>$user->nome_empresa,"telemovel"=>$user->telemovel, "email"=>$user->email,"imagem"=>$user->imagem,"categoria_id"=>$user->categoria_id, "auth_key"=>$user->auth_key , "funcao"=>$Funcao->item_name  ]);
+                return ["sucesso"=>"true","id"=>$user->id,"nome"=>$user->nome, "nome_empresa"=>$user->nome_empresa,"telemovel"=>$user->telemovel, "email"=>$user->email,"imagem"=>$user->imagem,"categoria_id"=>$user->categoria_id, "auth_key"=>$user->auth_key , "funcao"=>$Funcao->item_name  ];
            }else{
-               return json_encode("username ou password invalida");
+               return ["sucesso"=>"false","texto"=>"Username ou password invalida"];
            }
        }
-       return json_encode("Erro ao fazer o login. Tente mais tarde ou contacte o suporte");
+       return ["sucesso"=>"false","texto"=>"Erro ao fazer o login. Tente mais tarde ou contacte o suporte"];
     }
 
     //função para o registo da aplicação
@@ -72,14 +72,14 @@ class UtilizadorController extends ActiveController
         $user_request= $request->post();
 
         if(!isset($user_request["nome"]) || !isset($user_request["email"]) ||  !isset($user_request["password"]) || !isset($user_request["funcao"]) || !isset($user_request["categoria"])|| !isset($user_request["username"])) {
-            return json_encode("Preencha todos os campos");
+            return ["sucesso"=>"false","texto"=>"Preencha todos os campos"];
         }else{
             $usernamene_exists = $clientemodel::find()->where(["username"=>$user_request["username"]])->one();
             $emai_exists = $clientemodel::find()->where(["email"=>$user_request["email"]])->one();
             if($usernamene_exists!=null){
-                return json_encode("Username Ja utilizado");
+                return ["sucesso"=>"false","texto"=>"Username Ja utilizado"];
             }else if ($emai_exists!=null){
-                return json_encode("Email ja utilizado");
+                return ["sucesso"=>"false","texto"=>"Email ja utilizado"];
             }else{
                 $Categoria= $categoriamodel::find()->where(["nome_Categoria"=>$user_request["categoria"]])->one();
                 $User= new User();
@@ -92,7 +92,7 @@ class UtilizadorController extends ActiveController
                 $User->categoria_id= $Categoria->id;
                 $User->status = 9;
                 if(!$User->save(false)){
-                    return json_encode("Erro a fazer o registo. Tente mais tarde ou contacte o suporte");
+                    return ["sucesso"=>"false","texto"=>"Erro a fazer o registo. Tente mais tarde ou contacte o suporte"];
                 }
                 $userid= $clientemodel::find()->where(["username"=>$user_request["username"]])->one();
                 $auth= new AuthAssignment();
@@ -107,7 +107,7 @@ class UtilizadorController extends ActiveController
                 }else{
                     $this->FazPublish("NovoCliente",json_encode("Tem um novo cliente a aceitar. O cliente chama-se ".$User->nome."."));
                 }
-                return json_encode("Conta registada com sucesso");
+                return ["sucesso"=>"true","texto"=>"Conta registada com sucesso"];
             }
         }
     }

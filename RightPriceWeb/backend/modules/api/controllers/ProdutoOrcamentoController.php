@@ -10,6 +10,7 @@ use yii\filters\auth\QueryParamAuth;
 class ProdutoOrcamentoController extends ActiveController
 {
     public $modelClass = 'common\models\OrcamentoProduto';
+    public $modulOrcamento = 'common\models\Orcamento';
 
     public function behaviors()
     {
@@ -23,8 +24,8 @@ class ProdutoOrcamentoController extends ActiveController
 
 
         //função que vai buscar as os produtos do orçamento
-        //retorna todos os produtos de todos os orcamentos do sistema
-    public function actionProdutosOrcamentos()
+        //retorna todos os produtos do orcamento pedido
+    public function actionProdutosOrcamentos($id_orcamento)
     {
         $request = Yii::$app->request;
 
@@ -33,12 +34,20 @@ class ProdutoOrcamentoController extends ActiveController
             throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
-        $produtosorcamentosmodel = new $this->modelClass;
-        $List_produtosorcamentos = $produtosorcamentosmodel::find()->asArray()->all();
+        $ModelOrcamento = new $this->modulOrcamento();
+        $Orcamento = $ModelOrcamento::find()->where(["id" => $id_orcamento])->one();
 
-        if ($List_produtosorcamentos){
-            return json_encode($List_produtosorcamentos);
+        if ($Orcamento) {
+            $produtosorcamentosmodel = new $this->modelClass;
+            $List_produtosorcamentos = $produtosorcamentosmodel::find()->where(["orcamento_id"=>$id_orcamento])->asArray()->all();
+
+            if ($List_produtosorcamentos){
+                return $List_produtosorcamentos;
+            }
+            return  ["sucesso" => "false", "texto" => "Sem produtos o orcamento"];
+        }else {
+            throw new \yii\web\NotFoundHttpException("orcamento id not found or didn't exist!");
         }
-        return json_encode("NUll");
+
     }
 }

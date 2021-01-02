@@ -13,6 +13,7 @@ use yii;
 class FornecedorInstaladorController extends ActiveController
 {
     public $modelClass = 'common\models\fornecedorinstalador';
+    public $modelAuthAssigment = 'common\models\AuthAssignment';
 
     public function behaviors()
     {
@@ -38,14 +39,27 @@ class FornecedorInstaladorController extends ActiveController
             Yii::$app->response->statusCode = 400;
             die();
         }
+        $ModelAuth_Assignment = new $this->modelAuthAssigment ();
+        $FornecedorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_fornecedor])->one();
 
-        $fornecedor_instalador = new $this->modelClass;
-        $List_fornecedor = $fornecedor_instalador::find()->select('fornecedor_id,instalador_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
+        if ($FornecedorExiste) {
+            if (strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
+                $fornecedor_instalador = new $this->modelClass;
+                $List_fornecedor = $fornecedor_instalador::find()->select('fornecedor_id,instalador_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
 
-        if ($List_fornecedor){
-            return json_encode($List_fornecedor);
+                if ($List_fornecedor){
+                    return $List_fornecedor;
+                }else {
+                    return ["sucesso" => "false", "texto" => "Sem instaladores"];
+                }
+            } else {
+                throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
+            }
+        }else{
+                throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
         }
-        throw new \yii\web\NotFoundHttpException("Provider id not found or didn't exist!");
+
+        //throw new \yii\web\NotFoundHttpException("Provider id not found or didn't exist!");
 
                                                /* $query = new Query;
                                                 $script = ($query
@@ -68,14 +82,25 @@ class FornecedorInstaladorController extends ActiveController
            Yii::$app->response->statusCode = 400;
            throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
        }
+        $ModelAuth_Assignment = new $this->modelAuthAssigment ();
+        $InstaladorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_instalador])->one();
 
-       $instalador_fornecedor = new $this->modelClass;
-       $List_instaladores= $instalador_fornecedor::find()->select('fornecedor_id,instalador_id')->where(["instalador_id"=>$id_instalador])->asArray()->all();
+        if ($InstaladorExiste) {
+            if (strcmp($InstaladorExiste->item_name, "instalador")==0) {
+                $instalador_fornecedor = new $this->modelClass;
+                $List_instaladores= $instalador_fornecedor::find()->select('fornecedor_id,instalador_id')->where(["instalador_id"=>$id_instalador])->asArray()->all();
 
-       if ($List_instaladores){
-           return json_encode($List_instaladores);
-       }
-        throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
+                if ($List_instaladores){
+                    return $List_instaladores;
+                }else {
+                    return ["sucesso" => "false", "texto" => "Sem fornecedores"];
+                }
+            }else {
+                throw new \yii\web\NotFoundHttpException("Instalador id not found or didn't exist!");
+            }
+        }else{
+            throw new \yii\web\NotFoundHttpException("Instalador id not found or didn't exist!");
+        }
 
                                  /*$query = new Query;
                                  $script = ($query

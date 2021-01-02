@@ -39,9 +39,9 @@ class UtilizadorTokenController extends ActiveController
         $List_User = $User::find()->select('id,username,nome,nome_empresa,telemovel,email,imagem,categoria_id,status')->asArray()->all();
 
         if ($List_User){
-            return json_encode($List_User);
+            return $List_User;
         }
-        return json_encode("NUll");
+        return ["sucesso"=>"false","texto"=>"Sem Utilizadores no sistema"];;
 
                                        /* $query = new Query;
                                         $script = ($query
@@ -76,9 +76,9 @@ class UtilizadorTokenController extends ActiveController
         $queryResult = $script->queryAll();
 
         if ($queryResult){
-            return json_encode($queryResult);
+            return $queryResult;
         }
-        return json_encode("NUll");
+        return ["sucesso"=>"false","texto"=>"Sem Instaladores no sistema"];;
     }
 
 
@@ -102,9 +102,9 @@ class UtilizadorTokenController extends ActiveController
         $queryResult = $script->queryAll();
 
         if ($queryResult){
-            return json_encode($queryResult);
+            return $queryResult;
         }
-        return json_encode("NUll");
+        return ["sucesso"=>"false","texto"=>"Sem Fornecedores no sistema"];;
 
     }
 

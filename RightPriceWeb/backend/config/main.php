@@ -86,10 +86,12 @@ return [
                         'GET clientesinstalador/{id_instalador}' => 'clientesinstalador',
 
                         //controlador orcamento
-                        'GET orcamentos'=>'orcamentos',
+                        //cliente_id é o id do cliente
+                        'GET orcamentos/{cliente_id}'=>'orcamentos',
 
                         //controlador dos produtos do orçamento
-                        'GET produtosorcamentos'=>'produtosorcamentos'
+                        //id_orcamento é o id do orcamento
+                        'GET produtosorcamentos/{id_orcamento}'=>'produtosorcamentos'
                     ],
                 ],
             ],

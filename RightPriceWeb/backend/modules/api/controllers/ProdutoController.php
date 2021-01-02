@@ -14,6 +14,7 @@ use yii\rest\ActiveController;
 class ProdutoController extends ActiveController
 {
     public $modelClass = 'common\models\Produto';
+    public $modelAuthAssigment= 'common\models\AuthAssignment';
 
     public function behaviors()
     {
@@ -27,7 +28,7 @@ class ProdutoController extends ActiveController
 
 
     //Produtos do Fornecedor (id do fornecedor)
-    //serve para quando o fornecedor pedir os seus produtos
+    //serve para quando o fornecedor pedir os seus produtos e o instalador pedir os produtos dos fornecedores
     public function actionProdutosFornecedor($id_fornecedor){
         $request = Yii::$app->request;
         if (!$request->isGet)
@@ -36,17 +37,25 @@ class ProdutoController extends ActiveController
             throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
-        $ModelProduto = new $this->modelClass;
-        $List_produtos = $ModelProduto::find()->select('id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
-        $ModelFornecedorInstalador = new FornecedorInstalador();
-        $FornecedorExiste = $ModelFornecedorInstalador::find()->select('fornecedor_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->one();
-        if ($List_produtos and $FornecedorExiste){
-            return json_encode($List_produtos);
-        }else if($FornecedorExiste){
-            return json_encode("Null");
-        }
-        throw new \yii\web\NotFoundHttpException("Provider id not found or didn't exist!");
+        $ModelAuth_Assignment = new $this->modelAuthAssigment ();
+        $FornecedorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_fornecedor])->one();
 
+        if ($FornecedorExiste) {
+            if (strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
+                $ModelProduto = new $this->modelClass;
+                $List_produtos = $ModelProduto::find()->select('id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
+
+                if ($List_produtos){
+                    return $List_produtos;
+                }else{
+                    return ["sucesso" => "false", "texto" => "Sem produtos"];
+                }
+            }else {
+                throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
+            }
+        }else{
+            throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
+        }
                                     //diferente forma de fazer a query
 
                                    /* $query = new Query;

@@ -27,8 +27,8 @@ class CategoriaController extends ActiveController
         $List_categorias= $categoriasmodel::find()->asArray()->all();
 
         if ($List_categorias) {
-            return json_encode($List_categorias);
+            return $List_categorias;
         }
-        return json_encode("NUll");
+        return ["sucesso"=>"false","texto"=>"Sem categorias"];
     }
 }

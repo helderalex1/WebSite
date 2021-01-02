@@ -2,7 +2,7 @@
 
 namespace app\modules\api\controllers;
 
-use common\models\FornecedorInstalador;
+
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
@@ -16,6 +16,7 @@ class ClienteController extends ActiveController
 {
 
     public $modelClass = 'common\models\Cliente';
+    public $modelAuthAssigment = 'common\models\AuthAssignment';
 
 
     public function behaviors()
@@ -41,16 +42,23 @@ class ClienteController extends ActiveController
             throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
         }
 
-        $clientes_insta = new $this->modelClass;
-        $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
-        $ModelFornecedorInstalador = new FornecedorInstalador();
-        $InstaladorExiste = $ModelFornecedorInstalador::find()->select('fornecedor_id')->where(["instalador_id"=>$id_instalador])->asArray()->one();
-        if ($List_clientes and $InstaladorExiste) {
-            return json_encode($List_clientes);
-        }else if($InstaladorExiste){
-            return json_encode("NUll");
-        }
-        throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
-    }
+        $ModelAuth_Assignment = new $this->modelAuthAssigment ();
+        $InstaladorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_instalador])->one();
 
+        if ($InstaladorExiste) {
+            if (strcmp($InstaladorExiste->item_name, "instalador")==0) {
+                $clientes_insta = new $this->modelClass;
+                $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
+                if ($List_clientes) {
+                    return $List_clientes;
+                } else {
+                    return ["sucesso" => "false", "texto" => "Sem clientes"];
+                }
+            } else {
+                throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
+            }
+        }else{
+            throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
+        }
+    }
 }
