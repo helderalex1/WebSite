@@ -52,7 +52,7 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/utilizador','api/utilizador-token','api/produto','api/fornecedor-instalador','api/categoria','api/cliente','api/orcamento','api/produto-orcamento'],
+                    'controller' => ['api/utilizador','api/utilizador-token','api/produto','api/fornecedor-instalador','api/categoria','api/cliente','api/orcamento','api/produto-orcamento','api/auth-assigment'],
                     'pluralize' => false,
                     'extraPatterns' => [
                         //contrololador utilizador (Serve para o login e o registar). Não necessita de token a enviar
@@ -91,7 +91,11 @@ return [
 
                         //controlador dos produtos do orçamento
                         //id_orcamento é o id do orcamento
-                        'GET produtosorcamentos/{id_orcamento}'=>'produtosorcamentos'
+                        'GET produtosorcamentos/{id_orcamento}'=>'produtosorcamentos',
+
+                        //controlador AuthAssignment
+                        //retorna todas as funçoes atribuidas aos utilizadores
+                        'GET Auth'=>'Auth'
                     ],
                 ],
             ],
