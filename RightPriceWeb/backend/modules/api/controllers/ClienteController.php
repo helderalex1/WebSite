@@ -45,17 +45,13 @@ class ClienteController extends ActiveController
         $ModelAuth_Assignment = new $this->modelAuthAssigment ();
         $InstaladorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_instalador])->one();
 
-        if ($InstaladorExiste) {
-            if (strcmp($InstaladorExiste->item_name, "instalador")==0) {
-                $clientes_insta = new $this->modelClass;
-                $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
-                if ($List_clientes) {
-                    return $List_clientes;
-                } else {
-                    return ["sucesso" => "false", "texto" => "Sem clientes"];
-                }
+        if ($InstaladorExiste && strcmp($InstaladorExiste->item_name, "instalador")==0) {
+            $clientes_insta = new $this->modelClass;
+            $List_clientes = $clientes_insta::find()->select('id,user_id,nome,Telemovel,Nif,Email')->where(["user_id" => $id_instalador])->asArray()->all();
+            if ($List_clientes) {
+                return $List_clientes;
             } else {
-                throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");
+                return ["sucesso" => "false", "texto" => "Sem clientes"];
             }
         }else{
             throw new \yii\web\NotFoundHttpException("Installer id not found or didn't exist!");

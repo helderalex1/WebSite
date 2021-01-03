@@ -4,7 +4,6 @@ namespace app\modules\api\controllers;
 
 use Yii;
 use yii\rest\ActiveController;
-use \GuzzleHttp\json_encode;
 
 
 /**

@@ -40,8 +40,7 @@ class ProdutoController extends ActiveController
         $ModelAuth_Assignment = new $this->modelAuthAssigment ();
         $FornecedorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_fornecedor])->one();
 
-        if ($FornecedorExiste) {
-            if (strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
+        if ($FornecedorExiste && strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
                 $ModelProduto = new $this->modelClass;
                 $List_produtos = $ModelProduto::find()->select('id,fornecedor_id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
 
@@ -50,9 +49,6 @@ class ProdutoController extends ActiveController
                 }else{
                     return ["sucesso" => "false", "texto" => "Sem produtos"];
                 }
-            }else {
-                throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
-            }
         }else{
             throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
         }

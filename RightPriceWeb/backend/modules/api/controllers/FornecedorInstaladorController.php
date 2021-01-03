@@ -42,19 +42,17 @@ class FornecedorInstaladorController extends ActiveController
         $ModelAuth_Assignment = new $this->modelAuthAssigment ();
         $FornecedorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_fornecedor])->one();
 
-        if ($FornecedorExiste) {
-            if (strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
-                $fornecedor_instalador = new $this->modelClass;
-                $List_fornecedor = $fornecedor_instalador::find()->select('fornecedor_id,instalador_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
+        if ($FornecedorExiste and strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
 
-                if ($List_fornecedor){
-                    return $List_fornecedor;
-                }else {
-                    return ["sucesso" => "false", "texto" => "Sem instaladores"];
-                }
-            } else {
-                throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
+            $fornecedor_instalador = new $this->modelClass;
+            $List_fornecedor = $fornecedor_instalador::find()->select('fornecedor_id,instalador_id')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
+
+            if ($List_fornecedor){
+                return $List_fornecedor;
+            }else {
+                return ["sucesso" => "false", "texto" => "Sem instaladores"];
             }
+
         }else{
                 throw new \yii\web\NotFoundHttpException("Fornecedor id not found or didn't exist!");
         }
@@ -85,18 +83,14 @@ class FornecedorInstaladorController extends ActiveController
         $ModelAuth_Assignment = new $this->modelAuthAssigment ();
         $InstaladorExiste = $ModelAuth_Assignment::find()->where(["user_id" => $id_instalador])->one();
 
-        if ($InstaladorExiste) {
-            if (strcmp($InstaladorExiste->item_name, "instalador")==0) {
-                $instalador_fornecedor = new $this->modelClass;
-                $List_instaladores= $instalador_fornecedor::find()->select('fornecedor_id,instalador_id')->where(["instalador_id"=>$id_instalador])->asArray()->all();
+        if ($InstaladorExiste && strcmp($InstaladorExiste->item_name, "instalador")==0) {
+            $instalador_fornecedor = new $this->modelClass;
+            $List_instaladores= $instalador_fornecedor::find()->select('fornecedor_id,instalador_id')->where(["instalador_id"=>$id_instalador])->asArray()->all();
 
-                if ($List_instaladores){
-                    return $List_instaladores;
-                }else {
-                    return ["sucesso" => "false", "texto" => "Sem fornecedores"];
-                }
+            if ($List_instaladores){
+                return $List_instaladores;
             }else {
-                throw new \yii\web\NotFoundHttpException("Instalador id not found or didn't exist!");
+                return ["sucesso" => "false", "texto" => "Sem fornecedores"];
             }
         }else{
             throw new \yii\web\NotFoundHttpException("Instalador id not found or didn't exist!");
