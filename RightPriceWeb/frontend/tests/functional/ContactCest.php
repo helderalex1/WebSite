@@ -21,11 +21,11 @@ class ContactCest
     {
         $I->submitForm('#contact-form', []);
         $I->see('Contact', 'h1');
-        $I->seeValidationError('Name cannot be blank');
-        $I->seeValidationError('Email cannot be blank');
-        $I->seeValidationError('Subject cannot be blank');
-        $I->seeValidationError('Body cannot be blank');
-        $I->seeValidationError('The verification code is incorrect');
+        $I->see('Name cannot be blank');
+        $I->see('Email cannot be blank');
+        $I->see('Subject cannot be blank');
+        $I->see('Body cannot be blank');
+        $I->see('The verification code is incorrect');
     }
 
     public function checkContactSubmitNotCorrectEmail(FunctionalTester $I)
@@ -37,11 +37,11 @@ class ContactCest
             'ContactForm[body]' => 'test content',
             'ContactForm[verifyCode]' => 'testme',
         ]);
-        $I->seeValidationError('Email is not a valid email address.');
-        $I->dontSeeValidationError('Name cannot be blank');
-        $I->dontSeeValidationError('Subject cannot be blank');
-        $I->dontSeeValidationError('Body cannot be blank');
-        $I->dontSeeValidationError('The verification code is incorrect');
+        $I->see('Email is not a valid email address.');
+        $I->dontSee('Name cannot be blank');
+        $I->dontSee('Subject cannot be blank');
+        $I->dontSee('Body cannot be blank');
+        $I->dontSee('The verification code is incorrect');
     }
 
     public function checkContactSubmitCorrectData(FunctionalTester $I)

@@ -1,6 +1,7 @@
 <?php
 
 
+use common\models\Categoria;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
@@ -23,17 +24,15 @@ use yii\widgets\DetailView;
         <div class="row m-5">
             <?php for( $i=0; $i<count($data); $i++){ ?>
                 <?php if($data[$i]!=null ){?>
-                    <div class="card m-3" style="width: 18rem;">
+                    <div id="<?=ucfirst($data[$i]['username']) ?>" class="card m-3" style="width: 18rem;">
                         <?php if($data[$i]['imagem']!=null ){?>
-
-                        <?php }else{ ?>
-                            <img class="card-img-top" src="/img/transferir.svg" alt="Card image cap">
+                            <img class="card-img-top" src="<?=$data[$i]['imagem'] ?>" alt="Card image cap">
                         <?php } ?>
                         <div class="card-body">
                             <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>
                             <p class="card-text"><?=ucfirst($data[$i]['nome_empresa'])?></p>
                             <p class="card-text"><?=$data[$i]['email'] ?></p>
-                            <p class="card-text"><?= \app\models\Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
+                            <p class="card-text"><?= Categoria::findOne($data[$i]['categoria_id'])->getCatergoriaNome() ?></p>
                             <a href="<?= Url::toRoute(['friend/removefriend', 'id' => $data[$i]['id']]) ?>" class="btn btn-danger">Remover</a>
                         </div>
                     </div>

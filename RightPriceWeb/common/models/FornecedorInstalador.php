@@ -32,6 +32,7 @@ class FornecedorInstalador extends \yii\db\ActiveRecord
         return [
             [['fornecedor_id', 'instalador_id'], 'required'],
             [['fornecedor_id', 'instalador_id'], 'integer'],
+            [['fornecedor_id'], 'compare', 'compareAttribute' => 'instalador_id', 'operator' => '!=', 'type' => 'number'],
             [['created_at'], 'safe'],
             [['fornecedor_id', 'instalador_id'], 'unique', 'targetAttribute' => ['fornecedor_id', 'instalador_id']],
             [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['fornecedor_id' => 'id']],

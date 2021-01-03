@@ -69,6 +69,15 @@ AppAsset::register($this);
             ];
             $menuItems[] = ['label' => 'Clientes', 'url' => ['/cliente']];
             $menuItems[] = ['label' => 'Fornecedores', 'url' => ['/friend']];
+        }else{
+            Yii::$app->session->setFlash('error', "Error!! Please contact the administrator");
+            $brand =  [
+                'brandLabel' => Yii::$app->name,
+                'brandUrl' => '/',
+                'options' => [
+                    'class' => 'navbar-expand-md navbar-light bg-light',
+                ],
+            ];
         }
         $menuItems[] = ['label' => ''. ucfirst(Yii::$app->user->identity->username).'' , 'url' => ['/user/view', 'id' => Yii::$app->user->identity->getId()]];
         $menuItems[] = '<li>'
@@ -80,7 +89,6 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
-
 
     NavBar::begin($brand);
 
