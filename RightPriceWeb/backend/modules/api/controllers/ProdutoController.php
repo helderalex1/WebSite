@@ -43,7 +43,7 @@ class ProdutoController extends ActiveController
         if ($FornecedorExiste) {
             if (strcmp($FornecedorExiste->item_name, "fornecedor")==0) {
                 $ModelProduto = new $this->modelClass;
-                $List_produtos = $ModelProduto::find()->select('id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
+                $List_produtos = $ModelProduto::find()->select('id,fornecedor_id,imagem,nome,referencia,descricao,preco')->where(["fornecedor_id"=>$id_fornecedor])->asArray()->all();
 
                 if ($List_produtos){
                     return $List_produtos;
