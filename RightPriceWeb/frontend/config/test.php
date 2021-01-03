@@ -10,6 +10,6 @@ return [
         ],
         'request' => [
             'cookieValidationKey' => 'test',
-        ],
+        ]
     ],
 ];

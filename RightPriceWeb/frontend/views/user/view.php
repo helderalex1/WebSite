@@ -27,14 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row m-5">
         <div class="col-md-4">
-            <img class="card-img-right flex-auto d-none d-md-block" src="/<?=$model['imagem']?>" width="100%" alt="Card image cap">
+            <img class="card-img-right flex-auto d-none d-md-block" src="<?=$model['imagem']?>" width="100%" alt="Card image cap">
         </div>
         <div class="col-md-8">
             <strong class="d-inline-block mb-2 text-primary"><?=$model['username']?></strong>
             <h3 class="mb-0"><?=$model['nome_empresa']?></h3>
             <p class="mb-0"><?=$model['nome']?></p>
             <br>
-
             <p class="card-text mb-auto"><?=$model['telemovel']?></p>
             <p class="card-text mb-auto"><?=$model['email']?></p>
 

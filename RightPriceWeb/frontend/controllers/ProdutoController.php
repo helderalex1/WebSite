@@ -107,7 +107,7 @@ class ProdutoController extends Controller
             $unique_name = uniqid('file_');
             $model->imagem = 'uploads/'.$unique_name .'.'. $imagem->extension;
             if ($model->save()  ) {
-                $imagem->saveAs('uploads/'.$unique_name.'.'.$imagem->extension);
+                $imagem->saveAs('@backend/web/uploads/'.$unique_name.'.'.$imagem->extension);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
@@ -139,8 +139,8 @@ class ProdutoController extends Controller
                     unlink($model->imagem);
                 }
                 $unique_name = uniqid('produto_');
-                $model->imagem = 'uploads/'.$unique_name .'.'. $imagem->extension;
-                $imagem->saveAs('uploads/'.$unique_name.'.'.$imagem->extension);
+                $model->imagem = '/uploads/'.$unique_name .'.'. $imagem->extension;
+                $imagem->saveAs('@backend/uploads/'.$unique_name.'.'.$imagem->extension);
             }
 
             if($model->save()){

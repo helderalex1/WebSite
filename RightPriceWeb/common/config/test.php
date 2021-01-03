@@ -7,5 +7,7 @@ return [
             'class' => 'yii\web\User',
             'identityClass' => 'common\models\User',
         ],
+
+
     ],
 ];

@@ -17,8 +17,8 @@ class m201104_140349_cliente extends Migration
             'user_id' => $this->integer()->notNull(),
             'nome' => $this->string()->notNull(),
             'Telemovel' => $this->integer(),
-            'Nif' => $this->integer()->unique(),
-            'Email' => $this->string()->unique(),
+            'Nif' => $this->integer(),
+            'Email' => $this->string(),
         ]);
         $this->createIndex(
             'idx-cliente-user_id',

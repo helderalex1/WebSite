@@ -37,7 +37,7 @@ class Orcamento extends \yii\db\ActiveRecord
         return [
             [['cliente_id'], 'required'],
             [['cliente_id', 'margem'], 'integer'],
-            ['margem', 'integer','max' =>'100', 'min'=>'0'],
+            ['margem', 'integer','max' =>'100', 'min'=>'1'],
             [['data_orcamento'], 'safe'],
             [['total'], 'number'],
             [['nome'], 'string', 'max' => 255],

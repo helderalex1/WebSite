@@ -9,6 +9,7 @@ return [
         'created_at' => '1392559490',
         'updated_at' => '1392559490',
         'email' => 'sfriesen@jenkins.info',
+        'categoria_id' => '1',
     ],
     [
         'username' => 'test.test',
@@ -20,5 +21,6 @@ return [
         'created_at' => '1548675330',
         'updated_at' => '1548675330',
         'verification_token' => '4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330',
+        'categoria_id' => '1',
     ],
 ];
