@@ -84,8 +84,7 @@ class OrcamentoTest extends \Codeception\Test\Unit
         $orcProd->produto_id = 1;
         $orcProd->quantidade = 1;
         $this->assertTrue($orcProd->save());
-
-        $this->tester->seeInDatabase('orcamento_produto', ['orcamento_id' => $orcamento['id'],'produto_id' => '1']);
+        $this->tester->seeRecord(OrcamentoProduto::className(),['orcamento_id'=>$orcamento['id'],'produto_id' => '1']);
 
         $this->assertEquals('10.1', $orcamento->getTotal());
 
@@ -93,8 +92,9 @@ class OrcamentoTest extends \Codeception\Test\Unit
         $orcProd->produto_id = 2;
         $orcProd->quantidade = 2;
         $this->assertTrue($orcProd->save());
+        $this->tester->seeRecord(OrcamentoProduto::className(),['orcamento_id'=>$orcamento['id'],'produto_id' => '2']);
 
-        $this->tester->seeInDatabase('orcamento_produto', ['orcamento_id' => $orcamento['id'],'produto_id' => '2']);
+        //$this->tester->seeInDatabase('orcamento_produto', ['orcamento_id' => $orcamento['id'],'produto_id' => '2']);
 
         $this->assertEquals('20.301000000000002', $orcamento->getTotal());
     }
