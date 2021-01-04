@@ -35,7 +35,7 @@ class Orcamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cliente_id'], 'required'],
+            [['cliente_id', 'margem'], 'required'],
             [['cliente_id', 'margem'], 'integer'],
             ['margem', 'integer','max' =>'100', 'min'=>'1'],
             [['data_orcamento'], 'safe'],

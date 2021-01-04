@@ -258,6 +258,58 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Cliente::className(), ['user_id' => 'id']);
     }
 
+    public function getClientesArray()
+    {
+        return $this->hasMany(Cliente::className(), ['user_id' => 'id'])->asArray()->all();
+    }
+
+    public function getNumeroOrcamentos()
+    {
+        $total =0;
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->asArray()->all();
+            foreach ($orcamentos as $orcamento){
+                $total++;
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalOrcamentado()
+    {
+        $total =0;
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->all();
+            foreach ($orcamentos as $orcamento){
+                $total+=$orcamento->getTotal();
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalOrcamentadoClientes()
+    {
+        $i =0;
+        $array_clientes = [];
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->all();
+            $array_clientes[$i]['cliente'] = $cliente['nome'];
+            $array_clientes[$i]['numero_orcamentos'] = count($orcamentos);
+            $array_clientes[$i]['total'] = 0;
+            foreach ($orcamentos as $orcamento){
+                $array_clientes[$i]['total']+=$orcamento->getTotal();
+            }
+            $i++;
+        }
+        return $array_clientes;
+    }
+
+
+
+
     /**
      * Gets query for [[Instaladors]].
      *
@@ -309,7 +361,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $array_produtos;
     }
 
-    public function getTotalOrcamentado()
+    public function getTotalEncomendado()
     {
         //quantos produtos foram usados
         $produtos = $this->getProdutosArray();
