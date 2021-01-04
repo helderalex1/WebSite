@@ -13,9 +13,9 @@ return yii\helpers\ArrayHelper::merge(
                 'cookieValidationKey' => 'MO76VFZW2bsHu0b1ciPznYAhlPbR41o3',
             ],
             'db' => [
-                'dsn' => 'mysql:host=www.marcosferreira.site:3306;dbname=marcosfe_rightprice',
-                'username' => 'marcosfe_rightprice',
-                'password' => 'marcosfe_rightprice',
+                'dsn' => 'mysql:host=www.marcosferreira.site:3306;dbname=marcosfe_test',
+                'username' => 'marcosfe_test',
+                'password' => 'rightprice_test',
                 'charset' => 'utf8',
             ]
         ],

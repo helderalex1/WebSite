@@ -48,7 +48,7 @@ class SignupCest
         $I->fillField(['name' => 'SignupForm[password]'], 'tester_password');
 
 
-        $I->selectOption(['name' => 'SignupForm[categoria_id]'], '1');
+        $I->selectOption(['name' => 'SignupForm[categoria_id]'], 'Canalização');
         $I->seeOptionIsSelected('SignupForm[categoria_id]', 'Canalização');
         $I->selectOption(['name' => 'SignupForm[role]'], 'fornecedor');
         $I->seeOptionIsSelected('SignupForm[role]', 'Fornecedor');
