@@ -288,6 +288,68 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Produto::className(), ['fornecedor_id' => 'id']);
     }
 
+    public function getProdutosArray()
+    {
+        return $this->hasMany(Produto::className(), ['fornecedor_id' => 'id'])->asArray()->all();
+    }
+
+    public function getProdutosUsadosArray()
+    {
+        //quantos produtos foram usados
+        $produtos = $this->hasMany(Produto::className(), ['fornecedor_id' => 'id'])->asArray()->all();
+        $array_produtos = [];
+        $i=0;
+        foreach ($produtos as $produto){
+            $newProduto = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProduto!=null){
+                $array_produtos[$i] = $newProduto;
+                $i++;
+            }
+        }
+        return $array_produtos;
+    }
+
+    public function getTotalOrcamentado()
+    {
+        //quantos produtos foram usados
+        $produtos = $this->getProdutosArray();
+        $total=0;
+        foreach ($produtos as $produto){
+            $newProdutos = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProdutos!=null){
+                foreach ($newProdutos as $newProduto){
+                    $total += $newProduto['quantidade'] * $produto['preco'];
+                }
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalProdutos()
+    {
+        //quantidade e total por produto
+        $produtos = $this->getProdutosArray();
+        $array_produtos = [];
+        $array = [];
+        $i= 0;
+        $total=0;
+        foreach ($produtos as $produto){
+            $newProdutos = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProdutos!=null){
+                $array_produtos[$i]['quantidade'] = 0;
+                $array_produtos[$i]['total']  = 0;
+                foreach ($newProdutos as $newProduto){
+                    $array_produtos[$i]['produto'] = $produto['referencia'];
+                    $array_produtos[$i]['preco'] = $produto['preco'];
+                    $array_produtos[$i]['quantidade'] += $newProduto['quantidade'];
+                    $array_produtos[$i]['total']  += $newProduto['quantidade'] * $produto['preco'];
+                }
+            }
+            $i++;
+        }
+        return $array_produtos;
+    }
+
     /**
      * Gets query for [[Categoria]].
      *

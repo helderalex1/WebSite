@@ -40,7 +40,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             ['imagem', 'string'],
-            ['imagem', 'default', 'value' => '/uploads/default.png'],
+            ['imagem', 'default', 'value' => 'uploads/default.png'],
 
             ['nome', 'trim'],
             ['nome', 'required'],

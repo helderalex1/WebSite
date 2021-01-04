@@ -26,7 +26,7 @@ use yii\widgets\DetailView;
                 <?php if($data[$i]!=null ){?>
                     <div id="<?=ucfirst($data[$i]['username']) ?>" class="card m-3" style="width: 18rem;">
                         <?php if($data[$i]['imagem']!=null ){?>
-                            <img class="card-img-top" src="<?=$data[$i]['imagem'] ?>" alt="Card image cap">
+                            <img class="card-img-top" src="http://rightprice.backend/<?=$data[$i]['imagem'] ?>" alt="Card image cap">
                         <?php } ?>
                         <div class="card-body">
                             <h5 class="card-title"><strong><?=ucfirst($data[$i]['username']) ?></strong></h5>

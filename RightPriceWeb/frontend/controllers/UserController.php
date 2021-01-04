@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,17 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create','update','delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create','update','delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -101,8 +113,11 @@ class UserController extends Controller
                     Yii::$app->session->setFlash('error', "Erro ao inserir! (Imagem Inválida)");
                     return $this->render('update', ['model' => $model,]);
                 }
+                return var_dump();
+                if($model->getOldAttribute('imagem') != 'uploads/default.png'){
+                    unlink( Yii::getAlias('@images').'/'. $model->getOldAttribute('imagem'));
+                }
 
-                unlink( Yii::getAlias('@images').'/'. $model->getOldAttribute('imagem'));
 
                 $unique_name = uniqid('prof_');
                 $string = 'uploads/' . $unique_name . '.' . $imagem->extension;
