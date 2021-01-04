@@ -62,9 +62,10 @@ $this->title = 'Right Price';
         <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-        <img class="rounded-circle mb-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="180" height="180">
+        <img class="rounded-circle mb-4" src="/img/rui.jpg" alt="Generic placeholder image" width="180" height="180">
         <h2>Rui Agostinho</h2>
         <p>Mobile Developer</p>
+        <p>"If the journey is difficult, it is because you're on the right path "</p>
         <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
