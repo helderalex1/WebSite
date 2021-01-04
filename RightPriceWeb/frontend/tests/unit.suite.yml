@@ -5,9 +5,4 @@ modules:
         - Asserts
         - Yii2:
             part: [orm, email, fixtures]
-        - Db:
-            dsn: 'mysql:host=www.marcosferreira.site:3306;dbname=marcosfe_test'
-            user: 'marcosfe_test'
-            password: 'rightprice_test'
-            cleanup: false
 

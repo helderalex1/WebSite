@@ -87,8 +87,10 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        //Guardamos o conteudo da imagem que vem no POST
         $imagem = UploadedFile::getInstance($model, 'imagem');
         $flag = 0;
+        //se não houver imagem no POST emite uma flag
         if($imagem == null){
             $string = $model->imagem;
             $flag =1;
@@ -100,13 +102,11 @@ class UserController extends Controller
                     return $this->render('update', ['model' => $model,]);
                 }
 
-                if(isset($model->imagem ) && $model->imagem !=''){
-                    unlink($model->imagem);
-                }
+                unlink( Yii::getAlias('@images').'/'. $model->getOldAttribute('imagem'));
 
                 $unique_name = uniqid('prof_');
                 $string = 'uploads/' . $unique_name . '.' . $imagem->extension;
-                $imagem->saveAs($string);
+                $imagem->saveAs('@backend/web/'.$string);
             }
             $model->imagem = $string;
             if ($model->save()) {

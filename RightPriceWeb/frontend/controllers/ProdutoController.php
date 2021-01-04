@@ -104,7 +104,7 @@ class ProdutoController extends Controller
                 Yii::$app->session->setFlash('error', "Erro ao inserir! ( Imagem Inválida )");
                 return $this->render('create', ['model' => $model,]);
             }
-            $unique_name = uniqid('file_');
+            $unique_name = uniqid('produto_');
             $model->imagem = 'uploads/'.$unique_name .'.'. $imagem->extension;
             if ($model->save()  ) {
                 $imagem->saveAs('@backend/web/uploads/'.$unique_name.'.'.$imagem->extension);
@@ -128,21 +128,29 @@ class ProdutoController extends Controller
     {
         $model = $this->findModel($id);
         $model->fornecedor_id = Yii::$app->user->identity->getId();
+
+        //Guardamos o conteudo da imagem que vem no POST
+        $imagem = UploadedFile::getInstance($model, 'imagem');
+        $flag = 0;
+        //se não houver imagem no POST emite uma flag
+        if($imagem == null){
+            $string = $model->imagem;
+            $flag =1;
+        }
         if ($model->load(Yii::$app->request->post())) {
-            $imagem = UploadedFile::getInstance($model, 'imagem');
-            if($imagem != ''){
+
+            if($flag != 1){
                 if($imagem->extension != 'png' && $imagem->extension != 'jpg' ){
                     Yii::$app->session->setFlash('error', "Erro ao inserir! (Imagem Inválida)");
-                    return $this->render('create', ['model' => $model,]);
+                    return $this->render('update', ['model' => $model,]);
                 }
-                if(isset($model->imagem)){
-                    unlink($model->imagem);
-                }
+                //return var_dump(Yii::getAlias('@images'));
+                unlink( Yii::getAlias('@images').'/'. $model->getOldAttribute('imagem'));
                 $unique_name = uniqid('produto_');
-                $model->imagem = '/uploads/'.$unique_name .'.'. $imagem->extension;
-                $imagem->saveAs('@backend/uploads/'.$unique_name.'.'.$imagem->extension);
+                $string = 'uploads/' . $unique_name . '.' . $imagem->extension;
+                $imagem->saveAs('@backend/web/'.$string);
             }
-
+            $model->imagem = $string;
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }

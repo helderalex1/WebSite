@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row m-5">
         <div class="col-md-4">
-            <img class="card-img-right flex-auto d-none d-md-block" src="<?=$model['imagem']?>" width="100%" alt="Card image cap">
+            <img class="card-img-right flex-auto d-none d-md-block" src="http://rightprice.backend/<?=$model['imagem']?>" width="100%" alt="Card image cap">
         </div>
         <div class="col-md-8">
             <strong class="d-inline-block mb-2 text-primary"><?=$model['username']?></strong>

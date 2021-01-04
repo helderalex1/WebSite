@@ -42,4 +42,28 @@ return [
         'updated_at' => '1548675330',
         'verification_token' => 'already_used_token_1548675330',
     ],
+    [
+        'id'=> '10',
+        'username' => 'marcos',
+        'auth_key' => 'iwTNae9t34OmnK6l4vT4IeaTk-YWI2Rv',
+        'password_hash' => '$2y$13$G9g3DKK/zZkBFQl3ZKY1oul.jbJYNW5e9mxZuYaAl07E3Np0e8u/u',
+        'password_reset_token' => 't5GU9NwpuGYSfb7FEZMAxqtuz2PkEvv_' . time(),
+        'created_at' => '1391885313',
+        'updated_at' => '1391885313',
+        'email' => 'marcos@email.com',
+        'status' => '10',
+        'categoria_id'=> '1'
+    ],
+    [
+        'id'=> '11',
+        'username' => 'helder',
+        'auth_key' => 'iwTNae9t34OmnK6l4vT4IeaTk-YWI2Rv',
+        'password_hash' => '$2y$13$CXT0Rkle1EMJ/c1l5bylL.EylfmQ39O5JlHJVFpNn618OUS1HwaIi',
+        'password_reset_token' => 't5GU9NwpuGYSfb7FEZMAxqtuz2PkEvv_' . time(),
+        'created_at' => '1391885313',
+        'updated_at' => '1391885313',
+        'email' => 'helder@email.com',
+        'status' => '10',
+        'categoria_id'=> '1'
+    ]
 ];
