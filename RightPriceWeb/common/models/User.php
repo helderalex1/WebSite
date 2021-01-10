@@ -330,6 +330,20 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(User::className(), ['id' => 'fornecedor_id'])->viaTable('fornecedor_instalador', ['instalador_id' => 'id']);
     }
 
+    public function getInstaladores()
+    {
+        $role = \Yii::$app->authManager->getUserIdsByRole('instalador');
+        return $role;
+    }
+
+    public function getFornecedores()
+    {
+        $role = \Yii::$app->authManager->getUserIdsByRole('fornecedor');
+        return $role;
+    }
+
+
+
     /**
      * Gets query for [[Produtos]].
      *
@@ -410,5 +424,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function getCategoria()
     {
         return $this->hasOne(Categoria::className(), ['id' => 'categoria_id']);
+    }
+
+    public function getClientesByCategoria()
+    {
+        $categorias = Categoria::find()->asArray()->all();
+        $clientesByCategoria = [];
+        $i= 0;
+        foreach ($categorias as $categoria){
+            $clientesByCategoria[$i]['categoria']= $categoria['nome_Categoria'];
+            $clientesByCategoria[$i]['numClientes']= 0;
+             $users= User::find()->where(['categoria_id'=>$categoria['id']])->asArray()->all();
+             foreach ($users as $user ){
+                 $role = \Yii::$app->authManager->getRolesByUser($user['id']);
+                    if( !isset($role['admin']) ){
+                        $clientesByCategoria[$i]['numClientes']++;
+                    }
+             }
+            $i++;
+        }
+
+        return $clientesByCategoria;
     }
 }

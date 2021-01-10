@@ -14,7 +14,12 @@ $role = \Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->getId
 ?>
 <div class="user-index">
 
-    <h1 class="text-center mt-5"><?= Html::encode($this->title) ?></h1>
+    <div class="jumbotron mt-5">
+        <h1>Bem-Vindo <?=$user['username'] ?> !</h1>
+
+        <p class="lead">Aqui estão alguma estatísticas da sua conta.</p>
+
+    </div>
 
     <?php if(isset($role['fornecedor'])){ ?>
         <p class="text-center mb-5">Fornecedor</p>

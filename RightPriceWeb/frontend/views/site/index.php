@@ -59,7 +59,7 @@ $this->title = 'Right Price';
         <h2>Marcos Ferreira</h2>
         <p>Web Developer</p>
         <p>"If you think that you have reached perfection know that you still have much to learn"</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
+        <p><a class="btn btn-secondary" href="https://www.linkedin.com/in/marcosfe/" role="button">Linkedin &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
         <img class="rounded-circle mb-4" src="/img/rui.jpg" alt="Generic placeholder image" width="180" height="180">
@@ -74,65 +74,4 @@ $this->title = 'Right Price';
         <p>Project Manager</p>
         <p><a class="btn btn-secondary" href="#" role="button">Linkedin &raquo;</a></p>
     </div><!-- /.col-lg-4 -->
-</div>
-<div class="row m-5">
-    <h1>OS NOSSOS PARCEIROS</h1>
-</div>
-
-
-<div class="row section">
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Instalador 1</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Fornecedor 1</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Instalador 2</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Instalador 3</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Fornecedor 2</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-            <img class="card-img-top" src="/img/parceiro.png" alt="Card image cap">
-            <div class="card-body">
-                <h2 class="card-text">Instalador 4</h2>
-                <p class="card-text">Categoria</p>
-            </div>
-        </div>
-    </div>
 </div>
