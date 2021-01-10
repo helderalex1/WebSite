@@ -67,7 +67,7 @@ class OrcamentoController extends Controller
         if($id_c !=null)
         {
             $fornecedores = $user->getFornecedors();
-            $fornecedores = $fornecedores->where(['categoria_id' => $id_c])->asArray()->all();
+            $fornecedores = $fornecedores->where(['categoria_id' => $id_c, 'status' => User::STATUS_ACTIVE])->asArray()->all();
         }
 
         if($id_f !=null){

@@ -258,6 +258,58 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Cliente::className(), ['user_id' => 'id']);
     }
 
+    public function getClientesArray()
+    {
+        return $this->hasMany(Cliente::className(), ['user_id' => 'id'])->asArray()->all();
+    }
+
+    public function getNumeroOrcamentos()
+    {
+        $total =0;
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->asArray()->all();
+            foreach ($orcamentos as $orcamento){
+                $total++;
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalOrcamentado()
+    {
+        $total =0;
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->all();
+            foreach ($orcamentos as $orcamento){
+                $total+=$orcamento->getTotal();
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalOrcamentadoClientes()
+    {
+        $i =0;
+        $array_clientes = [];
+        $clientes = $this->getClientesArray();
+        foreach ($clientes as $cliente){
+            $orcamentos = Orcamento::find()->where(['cliente_id'=> $cliente['id']])->all();
+            $array_clientes[$i]['cliente'] = $cliente['nome'];
+            $array_clientes[$i]['numero_orcamentos'] = count($orcamentos);
+            $array_clientes[$i]['total'] = 0;
+            foreach ($orcamentos as $orcamento){
+                $array_clientes[$i]['total']+=$orcamento->getTotal();
+            }
+            $i++;
+        }
+        return $array_clientes;
+    }
+
+
+
+
     /**
      * Gets query for [[Instaladors]].
      *
@@ -278,6 +330,20 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(User::className(), ['id' => 'fornecedor_id'])->viaTable('fornecedor_instalador', ['instalador_id' => 'id']);
     }
 
+    public function getInstaladores()
+    {
+        $role = \Yii::$app->authManager->getUserIdsByRole('instalador');
+        return $role;
+    }
+
+    public function getFornecedores()
+    {
+        $role = \Yii::$app->authManager->getUserIdsByRole('fornecedor');
+        return $role;
+    }
+
+
+
     /**
      * Gets query for [[Produtos]].
      *
@@ -288,6 +354,68 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Produto::className(), ['fornecedor_id' => 'id']);
     }
 
+    public function getProdutosArray()
+    {
+        return $this->hasMany(Produto::className(), ['fornecedor_id' => 'id'])->asArray()->all();
+    }
+
+    public function getProdutosUsadosArray()
+    {
+        //quantos produtos foram usados
+        $produtos = $this->hasMany(Produto::className(), ['fornecedor_id' => 'id'])->asArray()->all();
+        $array_produtos = [];
+        $i=0;
+        foreach ($produtos as $produto){
+            $newProduto = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProduto!=null){
+                $array_produtos[$i] = $newProduto;
+                $i++;
+            }
+        }
+        return $array_produtos;
+    }
+
+    public function getTotalEncomendado()
+    {
+        //quantos produtos foram usados
+        $produtos = $this->getProdutosArray();
+        $total=0;
+        foreach ($produtos as $produto){
+            $newProdutos = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProdutos!=null){
+                foreach ($newProdutos as $newProduto){
+                    $total += $newProduto['quantidade'] * $produto['preco'];
+                }
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalProdutos()
+    {
+        //quantidade e total por produto
+        $produtos = $this->getProdutosArray();
+        $array_produtos = [];
+        $array = [];
+        $i= 0;
+        $total=0;
+        foreach ($produtos as $produto){
+            $newProdutos = OrcamentoProduto::find()->where(['produto_id'=> $produto['id']])->asArray()->all();
+            if($newProdutos!=null){
+                $array_produtos[$i]['quantidade'] = 0;
+                $array_produtos[$i]['total']  = 0;
+                foreach ($newProdutos as $newProduto){
+                    $array_produtos[$i]['produto'] = $produto['referencia'];
+                    $array_produtos[$i]['preco'] = $produto['preco'];
+                    $array_produtos[$i]['quantidade'] += $newProduto['quantidade'];
+                    $array_produtos[$i]['total']  += $newProduto['quantidade'] * $produto['preco'];
+                }
+            }
+            $i++;
+        }
+        return $array_produtos;
+    }
+
     /**
      * Gets query for [[Categoria]].
      *
@@ -296,5 +424,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function getCategoria()
     {
         return $this->hasOne(Categoria::className(), ['id' => 'categoria_id']);
+    }
+
+    public function getClientesByCategoria()
+    {
+        $categorias = Categoria::find()->asArray()->all();
+        $clientesByCategoria = [];
+        $i= 0;
+        foreach ($categorias as $categoria){
+            $clientesByCategoria[$i]['categoria']= $categoria['nome_Categoria'];
+            $clientesByCategoria[$i]['numClientes']= 0;
+             $users= User::find()->where(['categoria_id'=>$categoria['id']])->asArray()->all();
+             foreach ($users as $user ){
+                 $role = \Yii::$app->authManager->getRolesByUser($user['id']);
+                    if( !isset($role['admin']) ){
+                        $clientesByCategoria[$i]['numClientes']++;
+                    }
+             }
+            $i++;
+        }
+
+        return $clientesByCategoria;
     }
 }

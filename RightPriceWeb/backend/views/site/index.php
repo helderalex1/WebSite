@@ -2,52 +2,63 @@
 
 /* @var $this yii\web\View */
 
+use common\models\User;
+
 $this->title = 'My Yii Application';
+$user = User::find()->where(['id'=> Yii::$app->user->identity->getId()])->one();
+$role = \Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->getId());
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>Bem-Vindo <?=$user['username'] ?> !</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Aqui estão alguma estatísticas da aplicação.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
 
     <div class="body-content">
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        <?php if(isset($role['admin'])){ ?>
+            <div class="row border border-dark shadow p-3">
+                <div class="col text-center">
+                    Numero de Instaladores:
+                    <h1><?=count($user->getInstaladores()) ?></h1>
+                </div>
+                <div class="col text-center border-left border-dark ">
+                    Numero de Fornecedor:
+                    <h1><?=count($user->getFornecedores()) ?></h1>
+                </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+            <h2 class="text-center mt-5">Numero de clientes por categoria:</h2>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <div class="row text-center mt-5 mb-5 shadow p-3">
+                <div class="col ">
+                    <table class="table ">
+                        <thead>
+                        <tr>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Numero Clientes</th>
+                        </tr>
+                        </thead>
+
+                        <?php foreach($user->getClientesByCategoria() as $categoria){ ?>
+                            <tr>
+                                <td><?=$categoria['categoria'] ?></td>
+                                <td><?=$categoria['numClientes'] ?> </td>
+                            </tr>
+
+
+                        <?php }?>
+                    </table>
+
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
+        <?php } ?>
 
     </div>
 </div>

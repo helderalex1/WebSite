@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Categoria;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -8,7 +9,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$categorias = \app\models\Categoria::find()->asArray()->all();
+$categorias = Categoria::find()->asArray()->all();
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
