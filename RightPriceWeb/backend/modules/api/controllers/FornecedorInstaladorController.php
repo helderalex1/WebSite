@@ -107,6 +107,27 @@ class FornecedorInstaladorController extends ActiveController
                                  $queryResult = $script->query();
                                     return $queryResult;*/
    }
+
+
+   public function actionPutFornecedorInstalador($id_fornecedor,$id_instalador){
+    $request = yii::$app->request;
+    if(!$request->isDelete){
+        Yii::$app->response->statusCode = 400;
+           throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
+    } 
+
+    $ModelFornecedor_Instalador = new $this->modelClass ();
+
+       $RelacaoExiste = $ModelFornecedor_Instalador::find()->select('fornecedor_id,instalador_id')->where(["instalador_id"=>$id_instalador,"fornecedor_id"=>$id_fornecedor])->one();
+    
+        if ($RelacaoExiste) {
+              $RelacaoExiste->delete();
+                return ["sucesso"=>"true","texto"=>"Apagado com sucesso"];
+                
+            }else {
+                return ["sucesso" => "false", "texto" => "Erro desconhecido"];
+            }
+   }
 }
 
 

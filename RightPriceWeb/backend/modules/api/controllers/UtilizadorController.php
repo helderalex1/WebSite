@@ -44,7 +44,7 @@ class UtilizadorController extends ActiveController
            $Funcao= $funcaomodel::find()->where(["user_id"=>$user->id])->one();
            $hash = $user->password_hash;
            if(Yii::$app->getSecurity()->validatePassword($password, $hash) == true  ){
-                return ["sucesso"=>"true","id"=>$user->id,"nome"=>$user->nome, "nome_empresa"=>$user->nome_empresa,"telemovel"=>$user->telemovel, "email"=>$user->email,"imagem"=>$user->imagem,"categoria_id"=>$user->categoria_id, "auth_key"=>$user->auth_key , "funcao"=>$Funcao->item_name  ];
+                return ["sucesso"=>"true","id"=>$user->id,"username"=>$user->username,"nome"=>$user->nome, "nome_empresa"=>$user->nome_empresa,"telemovel"=>$user->telemovel, "email"=>$user->email,"imagem"=>$user->imagem,"categoria_id"=>$user->categoria_id, "auth_key"=>$user->auth_key , "funcao"=>$Funcao->item_name  ];
            }else{
                return ["sucesso"=>"false","texto"=>"Username ou password invalida"];
            }

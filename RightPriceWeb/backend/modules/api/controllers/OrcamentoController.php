@@ -45,7 +45,7 @@ class OrcamentoController extends ActiveController
             if ($List_orcamentos){
                 return $List_orcamentos;
             }else {
-                return ["sucesso" => "false", "texto" => "Sem orcamentos"];
+                return [["sucesso" => "false", "texto" => "Sem orcamentos"]];
             }
         }else {
             throw new \yii\web\NotFoundHttpException("Cliente id not found or didn't exist!");

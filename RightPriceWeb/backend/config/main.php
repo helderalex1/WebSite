@@ -77,6 +77,7 @@ return [
                         //id é o do instalador
                         'GET instalador-meus-fornecedores/{id_instalador}'=>'instaladormeusfornecedores',
 
+                        'Delete put-fornecedor-instalador/{id_fornecedor}{id_instalador}'=>'putfornecedorinstalador',
 
                         //controlador das categorias
                         //retorna as categorias do sistema
@@ -93,6 +94,7 @@ return [
                         //id_orcamento é o id do orcamento
                         'GET produtosorcamentos/{id_orcamento}'=>'produtosorcamentos',
 
+                        'PUT put-produtosorcamento/{id_orcamento}{id_produto}{novo_valor}'=>'putprodutosorcamento',
                         //controlador AuthAssignment
                         //retorna todas as funçoes atribuidas aos utilizadores
                         'GET Auth'=>'Auth'

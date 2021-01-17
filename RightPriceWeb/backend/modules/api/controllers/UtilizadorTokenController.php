@@ -108,5 +108,4 @@ class UtilizadorTokenController extends ActiveController
 
     }
 
-
 }

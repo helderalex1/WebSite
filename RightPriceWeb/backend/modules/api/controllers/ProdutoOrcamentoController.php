@@ -44,10 +44,32 @@ class ProdutoOrcamentoController extends ActiveController
             if ($List_produtosorcamentos){
                 return $List_produtosorcamentos;
             }
-            return  ["sucesso" => "false", "texto" => "Sem produtos o orcamento"];
+            return [["sucesso" => "false", "texto" => "Sem produtos o orcamento"]];
         }else {
             throw new \yii\web\NotFoundHttpException("orcamento id not found or didn't exist!");
         }
 
     }
+
+
+     public function actionPutProdutosorcamento($id_orcamento,$id_produto,$novo_valor){
+    $request = yii::$app->request;
+    if(!$request->isPut){
+        Yii::$app->response->statusCode = 400;
+           throw new \yii\web\BadRequestHttpException("Error method you only have permissions to do get method");
+    } 
+
+    $ModelProduto_Orcamento = new $this->modelClass ();
+
+       $RelacaoExiste = $ModelProduto_Orcamento::find()->select('orcamento_id,produto_id,quantidade')->where(["orcamento_id"=>$id_orcamento,"produto_id"=>$id_produto])->one();
+    
+        if ($RelacaoExiste) {
+              $RelacaoExiste->quantidade=$novo_valor;
+              $RelacaoExiste->save();
+                return ["sucesso"=>"true","texto"=>"Apagado com sucesso"];
+                
+            }else {
+                return ["sucesso" => "false", "texto" => "Erro desconhecido"];
+            }
+   }
 }
